@@ -1,7 +1,7 @@
-package me.siv.snowyspirit.mixins;
+package me.siv.snowyspirits.mixins;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
-import me.siv.snowyspirit.config.Config;
+import me.siv.snowyspirits.config.Config;
 import net.minecraft.client.multiplayer.ClientLevel;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -15,6 +15,4 @@ public class ClientLevelDataMixin {
     private long getDayTime(long original) {
         return Config.INSTANCE.getTimeChanger() ? Config.INSTANCE.getTime() : original;
     }
-
-
 }

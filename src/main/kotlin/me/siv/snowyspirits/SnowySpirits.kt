@@ -1,10 +1,10 @@
-package me.siv.snowyspirit
+package me.siv.snowyspirits
 
 import com.mojang.brigadier.CommandDispatcher
 import com.teamresourceful.resourcefulconfig.api.client.ResourcefulConfigScreen
 import com.teamresourceful.resourcefulconfig.api.loader.Configurator
 import com.teamresourceful.resourcefulconfig.api.types.ResourcefulConfig
-import me.siv.snowyspirit.config.Config
+import me.siv.snowyspirits.config.Config
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback
@@ -14,12 +14,12 @@ import net.minecraft.commands.CommandBuildContext
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
-const val MODID = "snowyspirit"
+const val MODID = "snowyspirits"
 
-object SnowySpirit : ClientModInitializer, Logger by LoggerFactory.getLogger(MODID) {
+object SnowySpirits : ClientModInitializer, Logger by LoggerFactory.getLogger(MODID) {
     val mc: Minecraft = Minecraft.getInstance()
 
-    val configurator = Configurator("snowyspirit")
+    val configurator = Configurator("snowyspirits")
     var config: ResourcefulConfig? = null
 
     override fun onInitializeClient() {
@@ -32,7 +32,7 @@ object SnowySpirit : ClientModInitializer, Logger by LoggerFactory.getLogger(MOD
         buildContext: CommandBuildContext
     ) {
         dispatcher.register(
-            ClientCommandManager.literal("snowyspirit").executes { context ->
+            ClientCommandManager.literal("snowyspirits").executes { context ->
                 mc.schedule { mc.setScreen(ResourcefulConfigScreen.make(config).build()) }
                 1
             })

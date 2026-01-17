@@ -1,8 +1,8 @@
 {
     "schemaVersion": 1,
-    "id": "snowyspirit",
+    "id": "snowyspirits",
     "version": "${version}",
-    "name": "Snowy Spirit :3",
+    "name": "Snowy Spirits :3",
     "description": "Snow!!!",
     "authors": [
         "Siv"
@@ -15,15 +15,15 @@
         "client": [
             {
                 "adapter": "kotlin",
-                "value": "me.siv.snowyspirit.SnowySpirit"
+                "value": "me.siv.snowyspirits.SnowySpirits"
             }
         ],
         "modmenu": [
-            "me.siv.snowyspirit.config.ModMenuCompat"
+            "me.siv.snowyspirits.config.ModMenuCompat"
         ]
     },
     "mixins": [
-        "snowyspirit.mixins.json"
+        "snowyspirits.mixins.json"
     ],
     "depends": {
         "fabricloader": ">=${loader_version}",

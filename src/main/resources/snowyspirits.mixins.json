@@ -1,13 +1,13 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "me.siv.snowyspirit.mixins",
+  "package": "me.siv.snowyspirits.mixins",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
   ],
   "client": [
-    "ClientLevelDataMixin",
-    "WeatherEffectRendererMixin"
+    "me.siv.snowyspirits.mixins.ClientLevelDataMixin",
+    "me.siv.snowyspirits.mixins.WeatherEffectRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

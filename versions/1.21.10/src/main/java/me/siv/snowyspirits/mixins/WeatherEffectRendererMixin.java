@@ -1,14 +1,13 @@
-package me.siv.snowyspirit.mixins;
+package me.siv.snowyspirits.mixins;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import me.siv.snowyspirit.config.Config;
+import me.siv.snowyspirits.config.Config;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.WeatherEffectRenderer;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.levelgen.Heightmap;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
@@ -31,7 +30,7 @@ public class WeatherEffectRendererMixin {
     }
 
     @WrapOperation(
-            method = "render(Lnet/minecraft/world/level/Level;Lnet/minecraft/client/renderer/MultiBufferSource;IFLnet/minecraft/world/phys/Vec3;)V",
+            method = "extractRenderState",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getRainLevel(F)F")
     )
     private float extractRenderStateRainLevel(Level instance, float f, Operation<Float> original) {
@@ -39,10 +38,10 @@ public class WeatherEffectRendererMixin {
     }
 
     @WrapOperation(
-            method = "collectColumnInstances",
+            method = "extractRenderState",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getHeight(Lnet/minecraft/world/level/levelgen/Heightmap$Types;II)I")
     )
-    private int extractRenderStateGetHeight(Level instance, Heightmap.Types types, int i, int j, Operation<Integer> original) {
-        return Config.INSTANCE.getNoPrecipitationBlocking() ? instance.getMinY() : original.call(instance, types, i, j);
+    private int extractRenderStateGetHeight(Level instance, net.minecraft.world.level.levelgen.Heightmap.Types heightmapType, int x, int z, Operation<Integer> original) {
+        return Config.INSTANCE.getNoPrecipitationBlocking() ? instance.getMinY() : original.call(instance, heightmapType, x, z);
     }
 }

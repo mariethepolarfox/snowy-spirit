@@ -1,0 +1,12 @@
+{
+  "config.snowyspirits.fun.weatherChanger": "Weather Changer",
+  "config.snowyspirits.fun.weatherChanger.desc": "Enables changing the weather",
+  "config.snowyspirits.fun.noPrecipitationBlocking": "Stop blocks stopping Precipitation",
+  "config.snowyspirits.fun.noPrecipitationBlocking.desc": "Stops blocks stopping precipitation making it render everywhere",
+  "config.snowyspirits.fun.timeChanger" : "Time Changer",
+  "config.snowyspirits.fun.timeChanger.desc": "Enables changing the time",
+  "config.snowyspirits.fun.time": "Time",
+  "config.snowyspirits.fun.time.desc": "Changes the time of day",
+  "config.snowyspirits.fun.precipitation": "Precipitation Type",
+  "config.snowyspirits.fun.precipitation.desc": "Changes the type of precipitation"
+}

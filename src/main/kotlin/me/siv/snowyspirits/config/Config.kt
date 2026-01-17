@@ -1,10 +1,10 @@
-package me.siv.snowyspirit.config
+package me.siv.snowyspirits.config
 
 import com.teamresourceful.resourcefulconfigkt.api.ConfigKt
 import net.minecraft.world.level.biome.Biome
 
-object Config : ConfigKt("snowyspirit/config") {
-    override val name = Literal("Snowy Spirit")
+object Config : ConfigKt("snowyspirits/config") {
+    override val name = Literal("Snowy Spirits")
 
     init {
         separator {
@@ -14,23 +14,23 @@ object Config : ConfigKt("snowyspirit/config") {
     }
 
     var weatherChanger by boolean(true) {
-        this.translation = "config.snowyspirit.fun.weatherChanger"
+        this.translation = "config.snowyspirits.fun.weatherChanger"
     }
 
     var precipitation: Biome.Precipitation by enum(Biome.Precipitation.SNOW) {
-        this.translation = "config.snowyspirit.fun.precipitation"
+        this.translation = "config.snowyspirits.fun.precipitation"
     }
 
     var noPrecipitationBlocking by boolean(true) {
-        this.translation = "config.snowyspirit.fun.noPrecipitationBlocking"
+        this.translation = "config.snowyspirits.fun.noPrecipitationBlocking"
     }
 
     var timeChanger by boolean(false) {
-        this.translation = "config.snowyspirit.fun.timeChanger"
+        this.translation = "config.snowyspirits.fun.timeChanger"
     }
 
     var time by long(0L) {
-        this.translation = "config.snowyspirit.fun.time"
+        this.translation = "config.snowyspirits.fun.time"
         this.range = 0L..24000L
     }
 }

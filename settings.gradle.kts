@@ -1,5 +1,5 @@
 
-rootProject.name = "Snowy Spirit"
+rootProject.name = "Snowy Spirits"
 
 pluginManagement {
     repositories {
