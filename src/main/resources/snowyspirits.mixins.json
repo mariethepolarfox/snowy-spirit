@@ -6,8 +6,8 @@
   "mixins": [
   ],
   "client": [
-    "me.siv.snowyspirits.mixins.ClientLevelDataMixin",
-    "me.siv.snowyspirits.mixins.WeatherEffectRendererMixin"
+    "ClientLevelDataMixin",
+    "WeatherEffectRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
