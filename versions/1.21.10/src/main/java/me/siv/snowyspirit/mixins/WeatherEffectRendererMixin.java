@@ -18,7 +18,7 @@ public class WeatherEffectRendererMixin {
             at = @At("RETURN")
     )
     private Biome.Precipitation getPrecipitationAt(Biome.Precipitation original) {
-        return Config.INSTANCE.getAlwaysSnowing() ? Biome.Precipitation.SNOW : original;
+        return Config.INSTANCE.getWeatherChanger() ? Config.INSTANCE.getPrecipitation() : original;
     }
 
     @WrapOperation(
@@ -26,7 +26,7 @@ public class WeatherEffectRendererMixin {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/ClientLevel;getRainLevel(F)F")
     )
     private float tickRainParticlesRainLevel(ClientLevel instance, float v, Operation<Float> original) {
-        return Config.INSTANCE.getAlwaysSnowing() ? 1.0f : original.call(instance, v);
+        return Config.INSTANCE.getWeatherChanger() ? 1.0f : original.call(instance, v);
     }
 
     @WrapOperation(
@@ -34,7 +34,7 @@ public class WeatherEffectRendererMixin {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getRainLevel(F)F")
     )
     private float extractRenderStateRainLevel(Level instance, float f, Operation<Float> original) {
-        return Config.INSTANCE.getAlwaysSnowing() ? 1.0f : original.call(instance, f);
+        return Config.INSTANCE.getWeatherChanger() ? 1.0f : original.call(instance, f);
     }
 
     @WrapOperation(
@@ -42,6 +42,6 @@ public class WeatherEffectRendererMixin {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getHeight(Lnet/minecraft/world/level/levelgen/Heightmap$Types;II)I")
     )
     private int extractRenderStateGetHeight(Level instance, net.minecraft.world.level.levelgen.Heightmap.Types heightmapType, int x, int z, Operation<Integer> original) {
-        return Config.INSTANCE.getNoSnowBlocking() ? instance.getMinY() : original.call(instance, heightmapType, x, z);
+        return Config.INSTANCE.getNoPrecipitationBlocking() ? instance.getMinY() : original.call(instance, heightmapType, x, z);
     }
 }

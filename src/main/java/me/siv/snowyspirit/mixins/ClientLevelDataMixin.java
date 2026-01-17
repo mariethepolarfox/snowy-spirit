@@ -13,7 +13,7 @@ public class ClientLevelDataMixin {
             at = @At("RETURN")
     )
     private long getDayTime(long original) {
-        return Config.INSTANCE.getTime() == -1 ? original : Config.INSTANCE.getTime();
+        return Config.INSTANCE.getTimeChanger() ? Config.INSTANCE.getTime() : original;
     }
 
 

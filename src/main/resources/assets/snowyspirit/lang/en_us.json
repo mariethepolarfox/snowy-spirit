@@ -1,8 +1,12 @@
 {
-  "config.snowyspirit.fun.alwaysSnow": "Always Snowing",
-  "config.snowyspirit.fun.alwaysSnow.desc": "Makes it always snow because snow is the best :3",
-  "config.snowyspirit.fun.noSnowBlocking": "Stop blocks stopping Precipitation",
-  "config.snowyspirit.fun.noSnowBlocking.desc": "Stops blocks stopping precipitation making it render everywhere",
-  "config.snowyspirit.fun.time": "Time Changer",
-  "config.snowyspirit.fun.time.desc": "Changes the time of day. Set to -1 to disable :3"
+  "config.snowyspirit.fun.weatherChanger": "Weather Changer",
+  "config.snowyspirit.fun.weatherChanger.desc": "Enables changing the weather",
+  "config.snowyspirit.fun.noPrecipitationBlocking": "Stop blocks stopping Precipitation",
+  "config.snowyspirit.fun.noPrecipitationBlocking.desc": "Stops blocks stopping precipitation making it render everywhere",
+  "config.snowyspirit.fun.timeChanger" : "Time Changer",
+  "config.snowyspirit.fun.timeChanger.desc": "Enables changing the time",
+  "config.snowyspirit.fun.time": "Time",
+  "config.snowyspirit.fun.time.desc": "Changes the time of day",
+  "config.snowyspirit.fun.precipitation": "Precipitation Type",
+  "config.snowyspirit.fun.precipitation.desc": "Changes the type of precipitation"
 }
