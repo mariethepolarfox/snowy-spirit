@@ -8,7 +8,8 @@
     "ClientLevelDataMixin",
     "ClientLevelMixin",
     "SkyRendererMixin",
-    "WeatherEffectRendererMixin"
+    "WeatherEffectRendererMixin",
+    "BiomeMixin"
   ],
   "injectors": {
     "defaultRequire": 1

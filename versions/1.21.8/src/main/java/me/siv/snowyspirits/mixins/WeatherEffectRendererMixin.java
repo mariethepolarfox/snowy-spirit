@@ -28,7 +28,8 @@ public class WeatherEffectRendererMixin {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/ClientLevel;getRainLevel(F)F")
     )
     private float tickRainParticlesRainLevel(ClientLevel instance, float v, Operation<Float> original) {
-        if (Config.INSTANCE.getWeatherChanger() && Config.INSTANCE.getWeatherType() != TestEnvironmentDefinition.Weather.Type.CLEAR) return 1.0f;
+        if (!Config.INSTANCE.getIntrusive())
+            if (Config.INSTANCE.getWeatherChanger() && Config.INSTANCE.getWeatherType() != TestEnvironmentDefinition.Weather.Type.CLEAR) return 1.0f;
         return original.call(instance, v);
     }
 
@@ -37,7 +38,8 @@ public class WeatherEffectRendererMixin {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getRainLevel(F)F")
     )
     private float extractRenderStateRainLevel(Level instance, float f, Operation<Float> original) {
-        if (Config.INSTANCE.getWeatherChanger() && Config.INSTANCE.getWeatherType() != TestEnvironmentDefinition.Weather.Type.CLEAR) return 1.0f;
+        if (!Config.INSTANCE.getIntrusive())
+            if (Config.INSTANCE.getWeatherChanger() && Config.INSTANCE.getWeatherType() != TestEnvironmentDefinition.Weather.Type.CLEAR) return 1.0f;
         return original.call(instance, f);
     }
 
