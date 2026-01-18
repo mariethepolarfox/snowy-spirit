@@ -18,16 +18,18 @@ object Config : ConfigKt("snowyspirits/config") {
         this.translation = "config.snowyspirits.weatherChanger"
     }
 
-    var precipitation: Biome.Precipitation by enum(Biome.Precipitation.SNOW) {
-        this.translation = "config.snowyspirits.precipitation"
-    }
-
     var weatherType: TestEnvironmentDefinition.Weather.Type by enum(TestEnvironmentDefinition.Weather.Type.RAIN) {
         this.translation = "config.snowyspirits.weatherType"
     }
 
+    var precipitation: Biome.Precipitation by enum(Biome.Precipitation.SNOW) {
+        this.translation = "config.snowyspirits.precipitation"
+        this.condition = { weatherType != TestEnvironmentDefinition.Weather.Type.CLEAR }
+    }
+
     var lightningChance by int(100000) {
         this.translation = "config.snowyspirits.lightningChance"
+        this.condition = {  weatherType == TestEnvironmentDefinition.Weather.Type.THUNDER }
     }
 
     var noPrecipitationBlocking by boolean(true) {

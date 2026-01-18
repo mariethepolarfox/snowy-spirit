@@ -58,7 +58,7 @@ object SnowySpirits : ClientModInitializer, Logger by LoggerFactory.getLogger(MO
     }
 
     private fun tickThunder() {
-        if (Config.weatherChanger && Config.precipitation == Biome.Precipitation.RAIN && Config.weatherType == TestEnvironmentDefinition.Weather.Type.THUNDER) {
+        if (Config.weatherChanger && Config.weatherType == TestEnvironmentDefinition.Weather.Type.THUNDER) {
             chunkList.forEach(LightningBoltUtil::tickChunkThunder)
         }
     }
