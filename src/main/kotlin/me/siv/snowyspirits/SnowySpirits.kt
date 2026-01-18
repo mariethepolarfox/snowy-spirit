@@ -16,7 +16,6 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientWorldEvents
 import net.minecraft.client.Minecraft
 import net.minecraft.commands.CommandBuildContext
 import net.minecraft.gametest.framework.TestEnvironmentDefinition
-import net.minecraft.world.level.biome.Biome
 import net.minecraft.world.level.chunk.LevelChunk
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
