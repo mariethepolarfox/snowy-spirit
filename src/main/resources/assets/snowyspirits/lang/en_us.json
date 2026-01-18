@@ -16,7 +16,7 @@
   "config.snowyspirits.lightningChance": "Lightning Chance",
   "config.snowyspirits.lightningChance.desc": "Lightning Chance in 1/(chance)",
   "config.snowyspirits.moonPhaseChanger": "Moon Phase Changer",
-  "config.snowyspirits.moonPhaseChanger.desc": "Chenges moon phase AWOOOOO",
+  "config.snowyspirits.moonPhaseChanger.desc": "Changes moon phase AWOOOOO",
   "config.snowyspirits.moonPhase": "Moon Phase",
   "config.snowyspirits.moonPhase.desc": "Moon phase to set"
 }
