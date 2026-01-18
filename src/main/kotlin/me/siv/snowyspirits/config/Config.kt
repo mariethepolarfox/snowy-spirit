@@ -15,23 +15,23 @@ object Config : ConfigKt("snowyspirits/config") {
     }
 
     var weatherChanger by boolean(true) {
-        this.translation = "config.snowyspirits.fun.weatherChanger"
+        this.translation = "config.snowyspirits.weatherChanger"
     }
 
     var precipitation: Biome.Precipitation by enum(Biome.Precipitation.SNOW) {
-        this.translation = "config.snowyspirits.fun.precipitation"
+        this.translation = "config.snowyspirits.precipitation"
     }
 
     var weatherType: TestEnvironmentDefinition.Weather.Type by enum(TestEnvironmentDefinition.Weather.Type.RAIN) {
-        this.translation = "config.snowyspirits.fun.weatherType"
+        this.translation = "config.snowyspirits.weatherType"
     }
 
     var lightningChance by int(100000) {
-        this.translation = "config.snowyspirits.fun.lightningChance"
+        this.translation = "config.snowyspirits.lightningChance"
     }
 
     var noPrecipitationBlocking by boolean(true) {
-        this.translation = "config.snowyspirits.fun.noPrecipitationBlocking"
+        this.translation = "config.snowyspirits.noPrecipitationBlocking"
     }
 
     init {
@@ -42,20 +42,20 @@ object Config : ConfigKt("snowyspirits/config") {
     }
 
     var timeChanger by boolean(false) {
-        this.translation = "config.snowyspirits.fun.timeChanger"
+        this.translation = "config.snowyspirits.timeChanger"
     }
 
     var time by long(0L) {
-        this.translation = "config.snowyspirits.fun.time"
+        this.translation = "config.snowyspirits.time"
         this.range = 0L..24000L
     }
 
     var moonPhaseChanger by boolean(false) {
-        this.translation = "config.snowyspirits.fun.moonPhaseChanger"
+        this.translation = "config.snowyspirits.moonPhaseChanger"
     }
 
     var moonPhase by enum(MoonPhase.FULL_MOON) {
-        this.translation = "config.snowyspirits.fun.moonPhase"
+        this.translation = "config.snowyspirits.moonPhase"
     }
 
     enum class MoonPhase(val phase: Int) {
