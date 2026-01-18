@@ -1,0 +1,4 @@
+accessWidener v1 named
+accessible field net/minecraft/world/entity/LightningBolt life I
+accessible field net/minecraft/world/entity/LightningBolt flashes I
+accessible field net/minecraft/world/entity/LightningBolt visualOnly Z

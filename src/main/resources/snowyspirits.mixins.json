@@ -3,10 +3,11 @@
   "minVersion": "0.8",
   "package": "me.siv.snowyspirits.mixins",
   "compatibilityLevel": "JAVA_21",
-  "mixins": [
-  ],
   "client": [
+    "AirBasedFogEnvironmentMixin",
     "ClientLevelDataMixin",
+    "ClientLevelMixin",
+    "SkyRendererMixin",
     "WeatherEffectRendererMixin"
   ],
   "injectors": {

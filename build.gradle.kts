@@ -32,6 +32,7 @@ dependencies {
 }
 
 loom {
+    accessWidenerPath = rootProject.file("src/main/resources/snowyspirits.accesswidener")
     runConfigs["client"].apply {
         ideConfigGenerated(true)
         runDir = "../../run"
