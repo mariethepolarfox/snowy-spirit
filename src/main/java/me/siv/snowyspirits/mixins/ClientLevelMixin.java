@@ -27,28 +27,32 @@ public abstract class ClientLevelMixin extends Level {
     @Override
     public float getRainLevel(float f) {
         if (Config.INSTANCE.getIntrusive())
-            if (Config.INSTANCE.getWeatherChanger()&& Config.INSTANCE.getWeatherType() != TestEnvironmentDefinition.Weather.Type.CLEAR) return 1.0f;
+            if (Config.INSTANCE.getWeatherChanger())
+                return Config.INSTANCE.getWeatherType() != TestEnvironmentDefinition.Weather.Type.CLEAR ? 1.0f : 0.0f;
         return super.getRainLevel(f);
     }
 
     @Override
     public float getThunderLevel(float f) {
         if (Config.INSTANCE.getIntrusive())
-            if (Config.INSTANCE.getWeatherChanger() && Config.INSTANCE.getWeatherType() == TestEnvironmentDefinition.Weather.Type.THUNDER) return 1.0f;
+            if (Config.INSTANCE.getWeatherChanger())
+                return Config.INSTANCE.getWeatherType() == TestEnvironmentDefinition.Weather.Type.THUNDER ? 1.0f : 0.0f;
         return super.getThunderLevel(f);
     }
 
     @Override
     public boolean isRaining() {
         if (Config.INSTANCE.getIntrusive())
-            if (Config.INSTANCE.getWeatherChanger() && Config.INSTANCE.getWeatherType() != TestEnvironmentDefinition.Weather.Type.CLEAR) return true;
+            if (Config.INSTANCE.getWeatherChanger())
+                return Config.INSTANCE.getWeatherType() != TestEnvironmentDefinition.Weather.Type.CLEAR;
         return super.isRaining();
     }
 
     @Override
     public boolean isThundering() {
         if (Config.INSTANCE.getIntrusive())
-            if (Config.INSTANCE.getWeatherChanger() && Config.INSTANCE.getWeatherType() == TestEnvironmentDefinition.Weather.Type.THUNDER) return true;
+            if (Config.INSTANCE.getWeatherChanger())
+                return Config.INSTANCE.getWeatherType() == TestEnvironmentDefinition.Weather.Type.THUNDER;
         return super.isThundering();
     }
 
@@ -72,7 +76,8 @@ public abstract class ClientLevelMixin extends Level {
     )
     private float getSkyColorRainLevel(ClientLevel instance, float v, Operation<Float> original) {
         if (!Config.INSTANCE.getIntrusive())
-            if (Config.INSTANCE.getWeatherChanger()&& Config.INSTANCE.getWeatherType() != TestEnvironmentDefinition.Weather.Type.CLEAR) return 1.0f;
+            if (Config.INSTANCE.getWeatherChanger())
+                return Config.INSTANCE.getWeatherType() != TestEnvironmentDefinition.Weather.Type.CLEAR ? 1.0f : 0.0f;
         return original.call(instance, v);
     }
 
@@ -82,7 +87,8 @@ public abstract class ClientLevelMixin extends Level {
     )
     private float getSkyColorThunderLevel(ClientLevel instance, float v, Operation<Float> original) {
         if (!Config.INSTANCE.getIntrusive())
-            if (Config.INSTANCE.getWeatherChanger() && Config.INSTANCE.getWeatherType() == TestEnvironmentDefinition.Weather.Type.THUNDER) return 1.0f;
+            if (Config.INSTANCE.getWeatherChanger())
+                return Config.INSTANCE.getWeatherType() == TestEnvironmentDefinition.Weather.Type.THUNDER ? 1.0f : 0.0f;
         return original.call(instance, v);
     }
 
@@ -92,7 +98,8 @@ public abstract class ClientLevelMixin extends Level {
     )
     private float getCloudColorRainLevel(ClientLevel instance, float v, Operation<Float> original) {
         if (!Config.INSTANCE.getIntrusive())
-            if (Config.INSTANCE.getWeatherChanger() && Config.INSTANCE.getWeatherType() != TestEnvironmentDefinition.Weather.Type.CLEAR) return 1.0f;
+            if (Config.INSTANCE.getWeatherChanger())
+                return Config.INSTANCE.getWeatherType() != TestEnvironmentDefinition.Weather.Type.CLEAR ? 1.0f : 0.0f;
         return original.call(instance, v);
     }
 
@@ -102,7 +109,8 @@ public abstract class ClientLevelMixin extends Level {
     )
     private float getCloudColorThunderLevel(ClientLevel instance, float v, Operation<Float> original) {
         if (!Config.INSTANCE.getIntrusive())
-            if (Config.INSTANCE.getWeatherChanger() && Config.INSTANCE.getWeatherType() == TestEnvironmentDefinition.Weather.Type.THUNDER) return 1.0f;
+            if (Config.INSTANCE.getWeatherChanger())
+                return Config.INSTANCE.getWeatherType() == TestEnvironmentDefinition.Weather.Type.THUNDER ? 1.0f : 0.0f;
         return original.call(instance, v);
     }
 
@@ -112,7 +120,8 @@ public abstract class ClientLevelMixin extends Level {
     )
     private float getSkyDarkenRainLevel(ClientLevel instance, float v, Operation<Float> original) {
         if (!Config.INSTANCE.getIntrusive())
-            if (Config.INSTANCE.getWeatherChanger() && Config.INSTANCE.getWeatherType() != TestEnvironmentDefinition.Weather.Type.CLEAR) return 1.0f;
+            if (Config.INSTANCE.getWeatherChanger())
+                return Config.INSTANCE.getWeatherType() != TestEnvironmentDefinition.Weather.Type.CLEAR ? 1.0f : 0.0f;
         return original.call(instance, v);
     }
 
@@ -122,7 +131,8 @@ public abstract class ClientLevelMixin extends Level {
     )
     private float getSkyDarkenThunderLevel(ClientLevel instance, float v, Operation<Float> original) {
         if (!Config.INSTANCE.getIntrusive())
-            if (Config.INSTANCE.getWeatherChanger() && Config.INSTANCE.getWeatherType() == TestEnvironmentDefinition.Weather.Type.THUNDER) return 1.0f;
+            if (Config.INSTANCE.getWeatherChanger())
+                return Config.INSTANCE.getWeatherType() == TestEnvironmentDefinition.Weather.Type.THUNDER ? 1.0f : 0.0f;
         return original.call(instance, v);
     }
 }

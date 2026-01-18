@@ -29,7 +29,8 @@ public class WeatherEffectRendererMixin {
     )
     private float tickRainParticlesRainLevel(ClientLevel instance, float v, Operation<Float> original) {
         if (!Config.INSTANCE.getIntrusive())
-            if (Config.INSTANCE.getWeatherChanger() && Config.INSTANCE.getWeatherType() != TestEnvironmentDefinition.Weather.Type.CLEAR) return 1.0f;
+            if (Config.INSTANCE.getWeatherChanger())
+                return Config.INSTANCE.getWeatherType() != TestEnvironmentDefinition.Weather.Type.CLEAR ? 1.0f : 0.0f;
         return original.call(instance, v);
     }
 
@@ -39,7 +40,8 @@ public class WeatherEffectRendererMixin {
     )
     private float extractRenderStateRainLevel(Level instance, float f, Operation<Float> original) {
         if (!Config.INSTANCE.getIntrusive())
-            if (Config.INSTANCE.getWeatherChanger() && Config.INSTANCE.getWeatherType() != TestEnvironmentDefinition.Weather.Type.CLEAR) return 1.0f;
+            if (Config.INSTANCE.getWeatherChanger())
+                return Config.INSTANCE.getWeatherType() != TestEnvironmentDefinition.Weather.Type.CLEAR ? 1.0f : 0.0f;
         return original.call(instance, f);
     }
 

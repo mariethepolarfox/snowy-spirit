@@ -17,7 +17,8 @@ public class AirBasedFogEnvironmentMixin {
     )
     private float getBaseColorRainLevel(ClientLevel instance, float v, Operation<Float> original) {
         if (!Config.INSTANCE.getIntrusive())
-            if (Config.INSTANCE.getWeatherChanger() && Config.INSTANCE.getWeatherType() != TestEnvironmentDefinition.Weather.Type.CLEAR) return 1.0f;
+            if (Config.INSTANCE.getWeatherChanger())
+                return Config.INSTANCE.getWeatherType() != TestEnvironmentDefinition.Weather.Type.CLEAR ? 1.0f : 0.0f;
         return original.call(instance, v);
     }
 
@@ -27,7 +28,8 @@ public class AirBasedFogEnvironmentMixin {
     )
     private float getBaseColorThunderLevel(ClientLevel instance, float v, Operation<Float> original) {
         if (!Config.INSTANCE.getIntrusive())
-            if (Config.INSTANCE.getWeatherChanger() && Config.INSTANCE.getWeatherType() == TestEnvironmentDefinition.Weather.Type.THUNDER) return 1.0f;
+            if (Config.INSTANCE.getWeatherChanger())
+                return Config.INSTANCE.getWeatherType() == TestEnvironmentDefinition.Weather.Type.THUNDER ? 1.0f : 0.0f;
         return original.call(instance, v);
     }
 }
