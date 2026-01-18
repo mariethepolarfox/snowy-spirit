@@ -14,6 +14,10 @@ object Config : ConfigKt("snowyspirits/config") {
         }
     }
 
+    var intrusive by boolean(true) {
+        this.translation = "config.snowyspirits.intrusive"
+    }
+
     var weatherChanger by boolean(true) {
         this.translation = "config.snowyspirits.weatherChanger"
     }

@@ -18,7 +18,8 @@ public class SkyRendererMixin {
     )
     private void extractRenderStateMoonPhase(SkyRenderer instance, int i, float f, MultiBufferSource multiBufferSource, PoseStack poseStack, Operation<Void> original) {
         float brightness = f;
-        if (Config.INSTANCE.getWeatherChanger()&& Config.INSTANCE.getWeatherType() != TestEnvironmentDefinition.Weather.Type.CLEAR) brightness = 0F;
+        if (!Config.INSTANCE.getIntrusive())
+            if (Config.INSTANCE.getWeatherChanger()&& Config.INSTANCE.getWeatherType() != TestEnvironmentDefinition.Weather.Type.CLEAR) brightness = 0F;
         int moonPhase = Config.INSTANCE.getMoonPhaseChanger() ? Config.INSTANCE.getMoonPhase().getPhase() : i;
         original.call(instance, moonPhase, brightness, multiBufferSource, poseStack);
     }
@@ -29,7 +30,8 @@ public class SkyRendererMixin {
     )
     private void extractRenderStateSun(SkyRenderer instance, float f, MultiBufferSource multiBufferSource, PoseStack poseStack, Operation<Void> original) {
         float brightness = f;
-        if (Config.INSTANCE.getWeatherChanger() && Config.INSTANCE.getWeatherType() != TestEnvironmentDefinition.Weather.Type.CLEAR) brightness = 0F;
+        if (!Config.INSTANCE.getIntrusive())
+            if (Config.INSTANCE.getWeatherChanger() && Config.INSTANCE.getWeatherType() != TestEnvironmentDefinition.Weather.Type.CLEAR) brightness = 0F;
         original.call(instance, brightness, multiBufferSource, poseStack);
     }
 
@@ -39,7 +41,8 @@ public class SkyRendererMixin {
     )
     private void extractRenderStateStars(SkyRenderer instance, float f, PoseStack poseStack, Operation<Void> original) {
         float brightness = f;
-        if (Config.INSTANCE.getWeatherChanger()&& Config.INSTANCE.getWeatherType() != TestEnvironmentDefinition.Weather.Type.CLEAR) brightness = 0F;
+        if (!Config.INSTANCE.getIntrusive())
+            if (Config.INSTANCE.getWeatherChanger()&& Config.INSTANCE.getWeatherType() != TestEnvironmentDefinition.Weather.Type.CLEAR) brightness = 0F;
         original.call(instance, brightness, poseStack);
     }
 }
