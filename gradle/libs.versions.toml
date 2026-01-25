@@ -8,7 +8,7 @@ resourcefulConfigKt = "3.5.15"
 
 kotlin-symbol-processor = "2.3.4"
 
-auto-mixins = "1.0.8"
+auto-mixins = "1.0.10"
 
 # Dev Dependencies
 devauth = "1.2.1"
