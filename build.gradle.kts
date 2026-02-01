@@ -1,3 +1,4 @@
+import net.fabricmc.loom.task.ValidateAccessWidenerTask
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -78,6 +79,8 @@ tasks {
     }
 
 }
+
+tasks.withType<ValidateAccessWidenerTask> { enabled = false }
 
 java {
     withSourcesJar()
