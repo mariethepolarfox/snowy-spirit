@@ -14,7 +14,7 @@ public class BiomeMixin {
             at = @At("RETURN")
     )
     private Biome.Precipitation getPrecipitationAt(Biome.Precipitation original) {
-        if (Config.INSTANCE.getIntrusive() && RenderSystem.isOnRenderThread())
+        if (RenderSystem.isOnRenderThread())
             if (Config.INSTANCE.getWeatherChanger()) return Config.INSTANCE.getPrecipitation();
         return original;
     }
