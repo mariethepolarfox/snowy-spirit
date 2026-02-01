@@ -56,10 +56,10 @@ public abstract class ClientLevelMixin extends Level {
     }
 
     //? if < 1.21.11 {
-    @Override
+    /*@Override
     public int getMoonPhase() {
         if (Config.INSTANCE.getMoonPhaseChanger()) return Config.INSTANCE.getMoonPhase().getPhase();
         return super.getMoonPhase();
     }
-    //? }
+    *///? }
 }
