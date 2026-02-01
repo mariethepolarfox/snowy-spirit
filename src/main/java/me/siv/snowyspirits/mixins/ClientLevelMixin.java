@@ -64,13 +64,12 @@ public abstract class ClientLevelMixin extends Level {
     }
 
     //? if < 1.21.11 {
-    @Override
+    /*@Override
     public int getMoonPhase() {
         if (Config.INSTANCE.getIntrusive())
             if (Config.INSTANCE.getMoonPhaseChanger()) return Config.INSTANCE.getMoonPhase().getPhase();
         return super.getMoonPhase();
     }
-    //? }
 
     @WrapOperation(
             method = "getSkyColor",
@@ -137,4 +136,5 @@ public abstract class ClientLevelMixin extends Level {
                 return Config.INSTANCE.getWeatherType() == TestEnvironmentDefinition.Weather.Type.THUNDER ? 1.0f : 0.0f;
         return original.call(instance, v);
     }
+    *///? }
 }

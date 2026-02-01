@@ -5,4 +5,5 @@ import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin(SkyRenderState.class)
 public class SkyRenderStateMixin {
+
 }
