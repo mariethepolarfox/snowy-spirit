@@ -3,8 +3,10 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     java
     idea
-    kotlin("jvm") version "2.2.21"
+    kotlin("jvm") version "2.3.0"
+    alias(libs.plugins.kotlin.symbol.processor)
     alias(libs.plugins.loom)
+    alias(libs.plugins.auto.mixins)
     `versioned-catalogues`
 }
 
@@ -25,8 +27,8 @@ dependencies {
     modImplementation(libs.devauth)
 
     modImplementation(versionedCatalog["resourcefulconfig"])
-    modImplementation(versionedCatalog["resourcefulconfigkt"])
-    include(versionedCatalog["resourcefulconfigkt"])
+    modImplementation(libs.resourcefulconfigkt)
+    include(libs.resourcefulconfigkt)
 
     modImplementation(versionedCatalog["modmenu"])
 }
@@ -79,6 +81,17 @@ tasks {
 
 java {
     withSourcesJar()
+    targetCompatibility = JavaVersion.VERSION_21
+    sourceCompatibility = JavaVersion.VERSION_21
+}
+
+kotlin {
+    jvmToolchain(21)
+}
+
+autoMixins {
+    mixinPackage = "me.siv.snowyspirits.mixins"
+    projectName = "snowyspirits"
 }
 
 idea {

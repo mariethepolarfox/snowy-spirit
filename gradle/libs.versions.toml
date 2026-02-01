@@ -2,18 +2,27 @@
 
 # Minecraft
 fabricLoader = "0.18.3"
-fabricKt = "1.13.7+kotlin.2.2.21"
+fabricKt = "1.13.8+kotlin.2.3.0"
 loom = "1.14-SNAPSHOT"
+resourcefulConfigKt = "3.5.15"
+
+kotlin-symbol-processor = "2.3.4"
+
+auto-mixins = "1.0.10"
 
 # Dev Dependencies
-devauth = "1.2.1"
+devauth = "1.2.2"
 
 [libraries]
 
 fabricLoader = { module = "net.fabricmc:fabric-loader", version.ref = "fabricLoader" }
 fabricKt = { module = "net.fabricmc:fabric-language-kotlin", version.ref = "fabricKt" }
+resourcefulconfigkt = { module = "com.teamresourceful.resourcefulconfigkt:resourcefulconfigkt-fabric-1.21.5", version.ref = "resourcefulConfigKt" }
 
 devauth = { module = "me.djtheredstoner:DevAuth-fabric", version.ref = "devauth" }
 
 [plugins]
 loom = { id = "fabric-loom", version.ref = "loom" }
+auto-mixins = { id = "me.owdding.auto-mixins", version.ref = "auto-mixins" }
+
+kotlin-symbol-processor = { id = "com.google.devtools.ksp", version.ref = "kotlin-symbol-processor" }

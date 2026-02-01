@@ -1,6 +1,4 @@
 {
-  "config.snowyspirits.intrusive": "Intrusive",
-  "config.snowyspirits.intrusive.desc": "Sets weather intrusively.\n §c⚠ This increases mod and resource pack compatability but may also cause issues with some mods relying on weather information. I recommend leaving this on. ⚠",
   "config.snowyspirits.weatherChanger": "Weather Changer",
   "config.snowyspirits.weatherChanger.desc": "Enables changing the weather",
   "config.snowyspirits.noPrecipitationBlocking": "Stop blocks stopping Precipitation",

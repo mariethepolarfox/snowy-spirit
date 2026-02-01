@@ -76,7 +76,7 @@ object LightningBoltUtil {
         }
 
         if (bolt.life >= 0) {
-            mc.level?.skyFlashTime = 2
+            mc.level?.setSkyFlashTime(2)
         }
     }
 

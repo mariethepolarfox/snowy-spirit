@@ -1,4 +1,7 @@
-accessWidener v1 named
+accessWidener v2 named
 accessible field net/minecraft/world/entity/LightningBolt life I
 accessible field net/minecraft/world/entity/LightningBolt flashes I
 accessible field net/minecraft/world/entity/LightningBolt visualOnly Z
+
+# 1.21.11
+accessible class net/minecraft/world/attribute/EnvironmentAttributeProbe$ValueProbe
