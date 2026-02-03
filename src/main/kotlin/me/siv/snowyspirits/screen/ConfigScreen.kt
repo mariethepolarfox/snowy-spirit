@@ -16,6 +16,7 @@ import earth.terrarium.olympus.client.utils.Orientation
 import me.siv.snowyspirits.SnowySpirits
 import me.siv.snowyspirits.SnowySpirits.mc
 import me.siv.snowyspirits.config.Config
+import me.siv.snowyspirits.screen.widget.SliderWidget
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.AbstractWidget
 import net.minecraft.client.gui.layouts.FrameLayout
@@ -120,9 +121,11 @@ class ConfigScreen : Overlay(null) {
                 lightningChance = Widgets.labelled(
                     mc.font,
                     Component.translatable("config.snowyspirits.lightningChance"),
-                    Widgets.intInput(lightningChanceState)
-                        .withSize(100, 20)
-                        .withTooltip(Component.translatable("config.snowyspirits.lightningChance.desc"))
+                    SliderWidget(
+                        lightningChanceState,
+                        0,
+                        1_000_000
+                    ).withSize(100, 20)
                 ).withEqualSpacing(Orientation.HORIZONTAL)
             }
         }
@@ -400,7 +403,7 @@ class ConfigScreen : Overlay(null) {
         FrameLayout.centerInRectangle(this.screen!!, this.rectangle)
     }
 
-    fun <T : AbstractWidget> texture(identifier: Identifier, width: Int = 16, height: Int = 16, yOffset: Int = -1, uvx: Float = 0f, uvy: Float = 0f) : WidgetRenderer<T> {
+    fun <T : AbstractWidget> texture(identifier: Identifier, width: Int = 16, height: Int = 16, yOffset: Int = -1) : WidgetRenderer<T> {
         return WidgetRenderer { graphics: GuiGraphics, context: WidgetRendererContext<T>, _: Float ->
             graphics.blit(
                 RenderPipelines.GUI_TEXTURED,
