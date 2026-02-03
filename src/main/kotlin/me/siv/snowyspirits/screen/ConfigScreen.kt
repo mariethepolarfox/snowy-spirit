@@ -36,8 +36,6 @@ class ConfigScreen : Overlay(null) {
     private val tabRadioState = RadioState.of("Weather", 0)
     private val timePresetRadioState = RadioState.empty<String>()
 
-    private var currentScroll = { 0 }
-
     override fun init() {
         super.init()
 
@@ -461,8 +459,8 @@ class ConfigScreen : Overlay(null) {
         graphics.blitSprite(
             RenderPipelines.GUI_TEXTURED,
             UIConstants.MODAL,
-            screen.x, screen.y,
-            screen.width, screen.height
+            screen.x - 2, screen.y - 2,
+            screen.width + 4, screen.height + 4
         )
     }
 
