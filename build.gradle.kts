@@ -36,7 +36,7 @@ dependencies {
     include(versionedCatalog["olympus-common"])
     modImplementation(versionedCatalog["olympus-common"])
 
-    include(versionedCatalog["olympus-common"])
+    include(versionedCatalog["olympus-fabric"])
     modImplementation(versionedCatalog["olympus-fabric"])
 }
 
