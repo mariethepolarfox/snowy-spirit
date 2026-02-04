@@ -170,9 +170,11 @@ class ConfigScreen : Overlay(null) {
             timeInput = Widgets.labelled(
                 mc.font,
                 Component.translatable("config.snowyspirits.time"),
-                Widgets.intInput(timeState)
-                    .withSize(100, 20)
-                    .withTooltip(Component.translatable("config.snowyspirits.time.desc"))
+                SliderWidget(
+                    timeState,
+                    0,
+                    24000
+                ).withSize(100, 20)
             ).withEqualSpacing(Orientation.HORIZONTAL)
 
             timeChangerFrameHeight += 29

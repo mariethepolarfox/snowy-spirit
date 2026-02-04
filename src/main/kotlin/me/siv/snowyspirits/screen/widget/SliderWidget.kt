@@ -12,6 +12,7 @@ import net.minecraft.client.input.MouseButtonEvent
 import net.minecraft.client.renderer.RenderPipelines
 import net.minecraft.util.Util
 import java.util.function.Consumer
+import kotlin.math.pow
 
 class SliderWidget<T: Number>(
     initState: State<T>,
@@ -20,24 +21,53 @@ class SliderWidget<T: Number>(
 ) : BaseWidget() {
     private val SCROLLBAR = UIConstants.id("lists/scroll/thumb")
     private val SCROLLBAR_WIDTH = 6
+    private val MAX_STRING_WIDTH = 40
+    private val SIDE_PADDING = 4
+
+    @Suppress("UNCHECKED_CAST")
+    private val adapter: NumberAdapter<T> = when (minValue) {
+        is Double -> object : NumberAdapter<T> {
+            override fun toDouble(value: T) = value.toDouble()
+            override fun fromDouble(value: Double) = value as T
+        }
+        is Float -> object : NumberAdapter<T> {
+            override fun toDouble(value: T) = value.toDouble()
+            override fun fromDouble(value: Double) = value.toFloat() as T
+        }
+        is Int -> object : NumberAdapter<T> {
+            override fun toDouble(value: T) = value.toInt().toDouble()
+            override fun fromDouble(value: Double) = value.toInt() as T
+        }
+        is Long -> object : NumberAdapter<T> {
+            override fun toDouble(value: T) = value.toLong().toDouble()
+            override fun fromDouble(value: Double) = value.toLong() as T
+        }
+        else -> error("Unsupported number type")
+    }
 
     private val state: State<T> = Util.make(ListenableState.of(initState)) {
-        it.registerListener { newVal -> onChange.accept(newVal) }
+        it.registerListener { newVal ->
+            onChange(newVal)
+            cacheDirty = true
+        }
     }
 
     private var sliderPosition = calculateSliderPos()
-    private var segments = this.width - SCROLLBAR_WIDTH
+    private var segments = this.width - SCROLLBAR_WIDTH - MAX_STRING_WIDTH - SIDE_PADDING * 2
 
-    private var onChange = Consumer { s: T? -> }
+    private var onChange: (T) -> Unit = {}
 
     private var isDragging = false
     private var listening = false
 
     private var cachedInput = ""
 
+    private var cachedStateString = state.get().formatted()
     private var stateStringWidth = 0
     private var stateStringPosX = 0
     private var stateStringPosY = 0
+
+    private var cacheDirty = true
 
     override fun renderWidget(
         graphics: GuiGraphics,
@@ -47,66 +77,84 @@ class SliderWidget<T: Number>(
     ) {
         if (!this.visible) return
 
+        if (cacheDirty) updateStateString()
+
         graphics.blitSprite(
             RenderPipelines.GUI_OPAQUE_TEXTURED_BACKGROUND,
             UIConstants.MODAL_INSET,
-            this.x,
+            this.x + SIDE_PADDING * 2 + MAX_STRING_WIDTH,
             this.y + (this.height - 6) / 2,
-            this.width,
+            segments + SCROLLBAR_WIDTH,
             6,
         )
 
         graphics.blitSprite(
             RenderPipelines.GUI_TEXTURED,
             SCROLLBAR,
-            this.x + sliderPosition,
+            this.x + sliderPosition + SIDE_PADDING * 2 + MAX_STRING_WIDTH,
             this.y,
             SCROLLBAR_WIDTH,
             this.height,
         )
 
-        val stateString = (if (!listening) state.get().toString() else cachedInput) + if (isDragging) " (Dragging)" else ""
-        stateStringWidth = mc.font.width(stateString)
-        stateStringPosX = this.x + this.width / 2 - stateStringWidth / 2
-        stateStringPosY = this.y + this.height / 2 - mc.font.lineHeight / 2
-
-        if (isOverStateString(mouseX, mouseY) && !listening) {
-            graphics.blitSprite(
-                RenderPipelines.GUI_OPAQUE_TEXTURED_BACKGROUND,
-                UIConstants.id("textbox/disabled"),
-                stateStringPosX - 2,
-                stateStringPosY - 3,
-                stateStringWidth + 4,
-                mc.font.lineHeight + 4,
-            )
-        } else if (listening) {
+        if (!listening) {
+            if (isOverStateString(mouseX, mouseY)) {
+                graphics.blitSprite(
+                    RenderPipelines.GUI_OPAQUE_TEXTURED_BACKGROUND,
+                    UIConstants.id("textbox/disabled"),
+                    stateStringPosX - 2,
+                    stateStringPosY - 3,
+                    MAX_STRING_WIDTH + 4,
+                    mc.font.lineHeight + 4,
+                )
+            } else {
+                graphics.blitSprite(
+                    RenderPipelines.GUI_OPAQUE_TEXTURED_BACKGROUND,
+                    UIConstants.id("textbox/hovered"),
+                    stateStringPosX - 2,
+                    stateStringPosY - 3,
+                    MAX_STRING_WIDTH + 4,
+                    mc.font.lineHeight + 4,
+                )
+            }
+        } else {
             graphics.blitSprite(
                 RenderPipelines.GUI_OPAQUE_TEXTURED_BACKGROUND,
                 UIConstants.id("textbox/normal"),
                 stateStringPosX - 2,
                 stateStringPosY - 3,
-                stateStringWidth + 4,
+                (stateStringWidth).coerceAtLeast(MAX_STRING_WIDTH) + 4,
                 mc.font.lineHeight + 4,
             )
+
+            if (System.currentTimeMillis() % 1000 < 500)
+                graphics.fill(
+                    RenderPipelines.GUI,
+                    stateStringPosX + stateStringWidth + 1,
+                    stateStringPosY,
+                    stateStringPosX + stateStringWidth + 2,
+                    stateStringPosY + mc.font.lineHeight - 1,
+                    0xFFFFFFFF.toInt()
+                )
         }
 
         graphics.drawString(
             mc.font,
-            stateString,
-            this.x + this.width / 2 - stateStringWidth / 2,
-            this.y + this.height / 2 - mc.font.lineHeight / 2,
+            cachedStateString,
+            stateStringPosX,
+            stateStringPosY,
             0xFFFFFFFF.toInt(),
         )
     }
 
-    fun calculateSliderPos(): Int {
-        return when (val current = state.get()) {
-            is Double -> (((current - minValue.toDouble()) / (maxValue.toDouble() - minValue.toDouble())) * segments).toInt()
-            is Float -> (((current - minValue.toFloat()) / (maxValue.toFloat() - minValue.toFloat())) * segments).toInt()
-            is Long -> (((current - minValue.toLong()).toDouble() / (maxValue.toLong() - minValue.toLong()).toDouble()) * segments).toInt()
-            is Int -> (((current - minValue.toInt()).toDouble() / (maxValue.toInt() - minValue.toInt()).toDouble()) * segments).toInt()
-            else -> 0
-        }
+    private fun calculateSliderPos(): Int {
+        val current = adapter.toDouble(state.get())
+        val min = adapter.toDouble(minValue)
+        val max = adapter.toDouble(maxValue)
+
+        if (max - min == 0.0) return 0
+
+        return (((current - min) / (max - min)) * segments).toInt()
     }
 
     override fun mouseClicked(
@@ -117,10 +165,12 @@ class SliderWidget<T: Number>(
             if (isOverStateString(mouseButtonEvent)) {
                 listening = true
                 cachedInput = state.get().toString()
+                cacheDirty = true
             } else {
                 if (listening) {
                     stopListening()
-                } else {
+                    cacheDirty = true
+                } else if (mouseButtonEvent.x >= (this.x + SIDE_PADDING * 2 + MAX_STRING_WIDTH)) {
                     isDragging = true
                     setSliderPosFromEvent(mouseButtonEvent)
                 }
@@ -135,7 +185,7 @@ class SliderWidget<T: Number>(
         d: Double,
         e: Double
     ): Boolean {
-        if (isDragging) {
+        if (isDragging && mouseButtonEvent.x >= (this.x + SIDE_PADDING * 2 + MAX_STRING_WIDTH)) {
             setSliderPosFromEvent(mouseButtonEvent)
             return true
         }
@@ -152,8 +202,26 @@ class SliderWidget<T: Number>(
         height: Int
     ): BaseWidget {
         this.setSize(width, height)
-        this.segments = this.width - SCROLLBAR_WIDTH
+        this.segments = this.width - SCROLLBAR_WIDTH - MAX_STRING_WIDTH - SIDE_PADDING * 2
         this.sliderPosition = calculateSliderPos()
+        cacheDirty
+        return this
+    }
+
+    override fun setX(i: Int) {
+        cacheDirty = true
+        super.setX(i)
+    }
+
+    override fun setY(i: Int) {
+        cacheDirty = true
+        super.setY(i)
+    }
+
+    fun withCallback(
+        onChange: (T) -> Unit
+    ): SliderWidget<T> {
+        this.onChange = onChange
         return this
     }
 
@@ -161,21 +229,14 @@ class SliderWidget<T: Number>(
         if (!listening) return super.keyPressed(keyEvent)
 
         when (keyEvent.key) {
-            InputConstants.KEY_ESCAPE -> {
-                stopListening()
-                return true
-            }
+            InputConstants.KEY_ESCAPE -> stopListening()
 
-            InputConstants.KEY_NUMPADENTER, InputConstants.KEY_RETURN -> {
-                stopListening()
-                return true
-            }
+            InputConstants.KEY_NUMPADENTER, InputConstants.KEY_RETURN -> stopListening()
 
             InputConstants.KEY_BACKSPACE -> {
                 if (cachedInput.isNotEmpty()) {
                     cachedInput = cachedInput.substring(0, cachedInput.length - 1)
                 }
-                return true
             }
 
             else -> {
@@ -183,57 +244,73 @@ class SliderWidget<T: Number>(
                 if (Character.isDigit(char) || char == '.' || char == '-') {
                     cachedInput += char
                 }
-                return true
             }
         }
+        cacheDirty = true
+        return true
     }
 
-    fun isOverStateString(event: MouseButtonEvent): Boolean {
-        return isOverStateString(event.x.toInt(), event.y.toInt())
+    private fun isOverStateString(event: MouseButtonEvent): Boolean =
+        isOverStateString(event.x.toInt(), event.y.toInt())
+
+    private fun isOverStateString(x: Int, y: Int): Boolean {
+        return x >= stateStringPosX - 2 && x <= stateStringPosX + (stateStringWidth).coerceAtLeast(MAX_STRING_WIDTH) + 2 &&
+               y >= stateStringPosY - 3 && y <= stateStringPosY + mc.font.lineHeight + 3
     }
 
-    fun isOverStateString(x: Int, y: Int): Boolean {
-        return x > stateStringPosX && x < stateStringPosX + stateStringWidth &&
-               y > stateStringPosY && y < stateStringPosY + mc.font.lineHeight
-    }
+    private fun setSliderPosFromEvent(event: MouseButtonEvent) {
+        if (segments <= 0) return
+        val relativeX = (event.x - this.x - SIDE_PADDING * 2 - MAX_STRING_WIDTH - SCROLLBAR_WIDTH / 2).toInt().coerceIn(0, segments)
 
-    fun setSliderPosFromEvent(event: MouseButtonEvent) {
-        val relativeX = (event.x.toInt() - this.x - (SCROLLBAR_WIDTH / 2)).coerceIn(0, segments)
         sliderPosition = relativeX
 
-        @Suppress("UNCHECKED_CAST")
-        val newValue = when (state.get()) {
-            is Double -> {
-                (minValue.toDouble() + (relativeX.toDouble() / segments) * (maxValue.toDouble() - minValue.toDouble())) as? T ?: minValue
-            }
-            is Float -> {
-                (minValue.toFloat() + (relativeX.toFloat() / segments) * (maxValue.toFloat() - minValue.toFloat())) as? T ?: minValue
-            }
-            is Long -> {
-                (minValue.toLong() + ((relativeX.toDouble() / segments) * (maxValue.toLong() - minValue.toLong())).toLong())  as? T ?: minValue
-            }
-            is Int -> {
-                (minValue.toInt() + ((relativeX.toDouble() / segments) * (maxValue.toInt() - minValue.toInt())).toInt()) as? T ?: minValue
-            }
-            else -> minValue
-        }
+        val min = adapter.toDouble(minValue)
+        val max = adapter.toDouble(maxValue)
 
-        state.set(newValue)
+        val value = min + (relativeX.toDouble() / segments) * (max - min)
+        state.set(adapter.fromDouble(value))
     }
 
-    fun stopListening() {
+    private fun stopListening() {
         listening = false
 
-        @Suppress("UNCHECKED_CAST")
-        val parsedValue: T? = when (state.get()) {
-            is Double -> cachedInput.toDoubleOrNull()?.coerceIn(minValue.toDouble(), maxValue.toDouble()) as? T
-            is Float -> cachedInput.toFloatOrNull()?.coerceIn(minValue.toFloat(), maxValue.toFloat()) as? T
-            is Long -> cachedInput.toLongOrNull()?.coerceIn(minValue.toLong(), maxValue.toLong()) as? T
-            is Int -> cachedInput.toIntOrNull()?.coerceIn(minValue.toInt(), maxValue.toInt()) as? T
-            else -> null
-        }
+        val parsed = cachedInput
+            .toDoubleOrNull()
+            ?.coerceIn(adapter.toDouble(minValue), adapter.toDouble(maxValue))
+            ?.let(adapter::fromDouble)
 
-        state.set(parsedValue ?: state.get())
+        state.set(parsed ?: state.get())
         sliderPosition = calculateSliderPos()
+    }
+
+    private fun updateStateString() {
+        cachedStateString = if (!listening) state.get().formatted() else cachedInput
+        stateStringWidth = mc.font.width(cachedStateString)
+        stateStringPosX = this.x + SIDE_PADDING
+        stateStringPosY = this.y + this.height / 2 - mc.font.lineHeight / 2
+    }
+
+    fun Number.formatted(): String {
+        return when (val num = this.toDouble()) {
+            in 1_000_000_000.0..Double.MAX_VALUE -> "${(num / 1_000_000_000.0).roundToMaxDec(2)}B"
+            in 1_000_000.0..999_999_999.0 -> "${(num / 1_000_000.0).roundToMaxDec(2)}M"
+            in 1_000.0..999_999.0 -> "${(num / 1_000.0).roundToMaxDec(2)}K"
+            else -> num.roundToMaxDec(2).toString()
+        }
+    }
+
+    fun Double.rounded(decimals: Int): Double {
+        val factor = 10.0.pow(decimals)
+        return kotlin.math.round(this * factor) / factor
+    }
+
+    fun Double.roundToMaxDec(maxDecimals: Int): Double {
+        // format number to: 100.233 -> 100.2, 10.233 -> 10.23, 1.233 -> 1.233
+        val str = this.toString()
+        val indexOfDot = str.indexOf('.')
+        if (indexOfDot == -1) return this
+        val decimals = str.length - indexOfDot - 1
+        val decToUse = if (decimals < maxDecimals) decimals else maxDecimals
+        return this.rounded(decToUse)
     }
 }
