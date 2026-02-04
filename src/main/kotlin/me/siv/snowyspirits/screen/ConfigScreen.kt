@@ -55,6 +55,11 @@ class ConfigScreen : Overlay(null) {
             Config.time = long
         }
 
+        val moonPhaseState = ListenableState<Int>.of(Config.moonPhase.ordinal)
+        moonPhaseState.registerListener { newValue ->
+            Config.moonPhase = Config.MoonPhase.entries[newValue]
+        }
+
         val mainScrollableList = ListWidget(width / 4 - 10, height / 3 - mc.font.lineHeight * 2 - 20)
 
         var weatherChangerFrameHeight = 30
@@ -83,7 +88,7 @@ class ConfigScreen : Overlay(null) {
                 Widgets.dropdown(
                     weatherDropdownState,
                     Weather.Type.entries,
-                    { Component.literal(it.name.lowercase().replaceFirstChar { char -> char.uppercase() }) },
+                    { Component.literal(it.name.toTitleCase()) },
                     {
                         it.withSize(100, 20).withTexture(UIConstants.BUTTON)
                     }
@@ -476,5 +481,9 @@ class ConfigScreen : Overlay(null) {
     override fun onClose() {
         SnowySpirits.saveConfig()
         super.onClose()
+    }
+
+    fun String.toTitleCase(): String {
+        return this.lowercase().replaceFirstChar { char -> char.uppercase() }
     }
 }

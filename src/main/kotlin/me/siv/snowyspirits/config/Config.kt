@@ -63,7 +63,7 @@ object Config : ConfigKt("snowyspirits/config") {
     enum class MoonPhase(val phase: Int) {
         FULL_MOON(0),
         WANING_GIBBOUS(1),
-        LAST_QUARTER(2),
+        THIRD_QUARTER(2),
         WANING_CRESCENT(3),
         NEW_MOON(4),
         WAXING_CRESCENT(5),

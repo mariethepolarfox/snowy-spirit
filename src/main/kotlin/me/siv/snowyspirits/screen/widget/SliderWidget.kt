@@ -11,7 +11,6 @@ import net.minecraft.client.input.KeyEvent
 import net.minecraft.client.input.MouseButtonEvent
 import net.minecraft.client.renderer.RenderPipelines
 import net.minecraft.util.Util
-import java.util.function.Consumer
 import kotlin.math.pow
 
 class SliderWidget<T: Number>(
@@ -102,18 +101,18 @@ class SliderWidget<T: Number>(
                 graphics.blitSprite(
                     RenderPipelines.GUI_OPAQUE_TEXTURED_BACKGROUND,
                     UIConstants.id("textbox/disabled"),
-                    stateStringPosX - 2,
+                    stateStringPosX - SIDE_PADDING,
                     stateStringPosY - 3,
-                    MAX_STRING_WIDTH + 4,
+                    MAX_STRING_WIDTH + SIDE_PADDING + 2,
                     mc.font.lineHeight + 4,
                 )
             } else {
                 graphics.blitSprite(
                     RenderPipelines.GUI_OPAQUE_TEXTURED_BACKGROUND,
                     UIConstants.id("textbox/hovered"),
-                    stateStringPosX - 2,
+                    stateStringPosX - SIDE_PADDING,
                     stateStringPosY - 3,
-                    MAX_STRING_WIDTH + 4,
+                    MAX_STRING_WIDTH + SIDE_PADDING + 2,
                     mc.font.lineHeight + 4,
                 )
             }
@@ -121,9 +120,9 @@ class SliderWidget<T: Number>(
             graphics.blitSprite(
                 RenderPipelines.GUI_OPAQUE_TEXTURED_BACKGROUND,
                 UIConstants.id("textbox/normal"),
-                stateStringPosX - 2,
+                stateStringPosX - SIDE_PADDING,
                 stateStringPosY - 3,
-                (stateStringWidth).coerceAtLeast(MAX_STRING_WIDTH) + 4,
+                (stateStringWidth).coerceAtLeast(MAX_STRING_WIDTH) + SIDE_PADDING + 2,
                 mc.font.lineHeight + 4,
             )
 
@@ -254,7 +253,7 @@ class SliderWidget<T: Number>(
         isOverStateString(event.x.toInt(), event.y.toInt())
 
     private fun isOverStateString(x: Int, y: Int): Boolean {
-        return x >= stateStringPosX - 2 && x <= stateStringPosX + (stateStringWidth).coerceAtLeast(MAX_STRING_WIDTH) + 2 &&
+        return x >= stateStringPosX - SIDE_PADDING && x <= stateStringPosX + (stateStringWidth).coerceAtLeast(MAX_STRING_WIDTH) + 2 &&
                y >= stateStringPosY - 3 && y <= stateStringPosY + mc.font.lineHeight + 3
     }
 
@@ -290,12 +289,12 @@ class SliderWidget<T: Number>(
         stateStringPosY = this.y + this.height / 2 - mc.font.lineHeight / 2
     }
 
-    fun Number.formatted(): String {
-        return when (val num = this.toDouble()) {
+    private fun T.formatted(): String {
+        return when (val num = adapter.toDouble(this)) {
             in 1_000_000_000.0..Double.MAX_VALUE -> "${(num / 1_000_000_000.0).roundToMaxDec(2)}B"
             in 1_000_000.0..999_999_999.0 -> "${(num / 1_000_000.0).roundToMaxDec(2)}M"
             in 1_000.0..999_999.0 -> "${(num / 1_000.0).roundToMaxDec(2)}K"
-            else -> num.roundToMaxDec(2).toString()
+            else -> adapter.fromDouble(num.roundToMaxDec(2)).toString()
         }
     }
 
