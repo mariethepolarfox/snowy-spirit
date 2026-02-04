@@ -42,7 +42,6 @@ class ConfigScreen : Overlay(null) {
 
         val weatherDropdownState = DropdownState.of(Config.weatherType)
         val precipitationDropdownState = DropdownState.of(Config.precipitation)
-        val moonPhaseDropdownState = DropdownState.of(Config.moonPhase)
 
         val lightningChanceState = ListenableState<Int>.of(Config.lightningChance)
         lightningChanceState.registerListener { newValue ->
@@ -238,27 +237,11 @@ class ConfigScreen : Overlay(null) {
             moonPhaseWidget = Widgets.labelled(
                 mc.font,
                 Component.translatable("config.snowyspirits.moonPhase"),
-                Widgets.dropdown(
-                    moonPhaseDropdownState,
-                    Config.MoonPhase.entries,
-                    {
-                        Component.literal(
-                            it.name.lowercase().split("_")
-                                .joinToString(" ") {
-                                    string -> string.replaceFirstChar { char -> char.uppercase() }
-                                }
-                        )
-                    },
-                    {
-                        it.withSize(100, 20).withTexture(UIConstants.BUTTON)
-                    }
-                ) {
-                    it.withSize(100, 20 * Config.MoonPhase.entries.size + 4)
-                        .withTexture(UIConstants.MODAL_INSET)
-                        .withCallback { newVal ->
-                            Config.moonPhase = newVal
-                        }
-                }
+                SliderWidget(
+                    moonPhaseState,
+                    0,
+                    Config.MoonPhase.entries.size - 1
+                ).withSize(100, 20)
             ).withEqualSpacing(Orientation.HORIZONTAL)
 
             moonChangerFrameHeight += 69
