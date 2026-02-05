@@ -32,6 +32,12 @@ dependencies {
     include(libs.resourcefulconfigkt)
 
     modImplementation(versionedCatalog["modmenu"])
+
+    include(versionedCatalog["olympus-common"])
+    modImplementation(versionedCatalog["olympus-common"])
+
+    include(versionedCatalog["olympus-fabric"])
+    modImplementation(versionedCatalog["olympus-fabric"])
 }
 
 loom {

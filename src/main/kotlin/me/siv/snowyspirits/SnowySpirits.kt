@@ -1,10 +1,10 @@
 package me.siv.snowyspirits
 
 import com.mojang.brigadier.CommandDispatcher
-import com.teamresourceful.resourcefulconfig.api.client.ResourcefulConfigScreen
 import com.teamresourceful.resourcefulconfig.api.loader.Configurator
 import com.teamresourceful.resourcefulconfig.api.types.ResourcefulConfig
 import me.siv.snowyspirits.config.Config
+import me.siv.snowyspirits.screen.ConfigScreen
 import me.siv.snowyspirits.utils.LightningBoltUtil
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager
@@ -51,7 +51,7 @@ object SnowySpirits : ClientModInitializer, Logger by LoggerFactory.getLogger(MO
     ) {
         dispatcher.register(
             ClientCommandManager.literal("snowyspirits").executes { context ->
-                mc.schedule { mc.setScreen(ResourcefulConfigScreen.make(config).build()) }
+                mc.schedule { mc.setScreen(ConfigScreen()) }
                 1
             })
     }
@@ -60,5 +60,9 @@ object SnowySpirits : ClientModInitializer, Logger by LoggerFactory.getLogger(MO
         if (Config.weatherChanger && Config.weatherType == TestEnvironmentDefinition.Weather.Type.THUNDER) {
             chunkList.forEach(LightningBoltUtil::tickChunkThunder)
         }
+    }
+
+    fun saveConfig() {
+        config?.save()
     }
 }
