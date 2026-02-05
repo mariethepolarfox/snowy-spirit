@@ -6,12 +6,12 @@ import earth.terrarium.olympus.client.ui.UIConstants
 import earth.terrarium.olympus.client.utils.ListenableState
 import earth.terrarium.olympus.client.utils.State
 import me.siv.snowyspirits.SnowySpirits.mc
+import me.siv.snowyspirits.utils.roundToMaxDec
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.input.KeyEvent
 import net.minecraft.client.input.MouseButtonEvent
 import net.minecraft.client.renderer.RenderPipelines
 import net.minecraft.util.Util
-import kotlin.math.pow
 
 class SliderWidget<T: Number>(
     initState: State<T>,
@@ -203,7 +203,7 @@ class SliderWidget<T: Number>(
         this.setSize(width, height)
         this.segments = this.width - SCROLLBAR_WIDTH - MAX_STRING_WIDTH - SIDE_PADDING * 2
         this.sliderPosition = calculateSliderPos()
-        cacheDirty
+        cacheDirty = true
         return this
     }
 
@@ -296,20 +296,5 @@ class SliderWidget<T: Number>(
             in 1_000.0..999_999.0 -> "${(num / 1_000.0).roundToMaxDec(2)}K"
             else -> adapter.fromDouble(num.roundToMaxDec(2)).toString()
         }
-    }
-
-    fun Double.rounded(decimals: Int): Double {
-        val factor = 10.0.pow(decimals)
-        return kotlin.math.round(this * factor) / factor
-    }
-
-    fun Double.roundToMaxDec(maxDecimals: Int): Double {
-        // format number to: 100.233 -> 100.2, 10.233 -> 10.23, 1.233 -> 1.233
-        val str = this.toString()
-        val indexOfDot = str.indexOf('.')
-        if (indexOfDot == -1) return this
-        val decimals = str.length - indexOfDot - 1
-        val decToUse = if (decimals < maxDecimals) decimals else maxDecimals
-        return this.rounded(decToUse)
     }
 }

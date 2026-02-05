@@ -17,6 +17,7 @@ import me.siv.snowyspirits.SnowySpirits
 import me.siv.snowyspirits.SnowySpirits.mc
 import me.siv.snowyspirits.config.Config
 import me.siv.snowyspirits.screen.widget.SliderWidget
+import me.siv.snowyspirits.screen.widget.UnlabeledSliderWidget
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.AbstractWidget
 import net.minecraft.client.gui.layouts.FrameLayout
@@ -237,7 +238,7 @@ class ConfigScreen : Overlay(null) {
             moonPhaseWidget = Widgets.labelled(
                 mc.font,
                 Component.translatable("config.snowyspirits.moonPhase"),
-                SliderWidget(
+                UnlabeledSliderWidget(
                     moonPhaseState,
                     0,
                     Config.MoonPhase.entries.size - 1
