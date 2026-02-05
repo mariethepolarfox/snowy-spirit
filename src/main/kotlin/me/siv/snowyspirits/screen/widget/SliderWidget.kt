@@ -11,7 +11,11 @@ import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.input.KeyEvent
 import net.minecraft.client.input.MouseButtonEvent
 import net.minecraft.client.renderer.RenderPipelines
+//? if > 1.21.10 {
 import net.minecraft.util.Util
+//? } else {
+/*import net.minecraft.Util*/
+//? }
 
 class SliderWidget<T: Number>(
     initState: State<T>,
