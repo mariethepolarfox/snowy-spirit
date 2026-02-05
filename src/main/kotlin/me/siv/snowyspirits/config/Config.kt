@@ -60,6 +60,21 @@ object Config : ConfigKt("snowyspirits/config") {
         this.translation = "config.snowyspirits.moonPhase"
     }
 
+    init {
+        separator {
+            title = "Other"
+            description = "Mrow :3"
+        }
+    }
+
+    var skyTypeChanger by boolean(false) {
+        this.translation = "config.snowyspirits.skyTypeChanger"
+    }
+
+    var skyType by enum(SkyType.END) {
+        this.translation = "config.snowyspirits.skyType"
+    }
+
     enum class MoonPhase(val phase: Int) {
         FULL_MOON(0),
         WANING_GIBBOUS(1),
@@ -69,5 +84,11 @@ object Config : ConfigKt("snowyspirits/config") {
         WAXING_CRESCENT(5),
         FIRST_QUARTER(6),
         WAXING_GIBBOUS(7)
+    }
+
+    enum class SkyType {
+        NONE,
+        OVERWORLD,
+        END,
     }
 }

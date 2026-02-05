@@ -16,5 +16,9 @@
   "config.snowyspirits.moonPhaseChanger": "Moon Phase Changer",
   "config.snowyspirits.moonPhaseChanger.desc": "Changes moon phase AWOOOOO",
   "config.snowyspirits.moonPhase": "Moon Phase",
-  "config.snowyspirits.moonPhase.desc": "Moon phase to set"
+  "config.snowyspirits.moonPhase.desc": "Moon phase to set",
+  "config.snowyspirits.skyTypeChanger": "Sky Type Changer",
+  "config.snowyspirits.skyTypeChanger.desc": "Changes the sky type",
+  "config.snowyspirits.skyType": "Sky Type",
+  "config.snowyspirits.skyType.desc": "Sky type to set"
 }

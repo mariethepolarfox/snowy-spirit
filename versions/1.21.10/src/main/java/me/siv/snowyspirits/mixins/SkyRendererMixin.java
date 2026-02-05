@@ -4,6 +4,7 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import me.siv.snowyspirits.config.Config;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.renderer.DimensionSpecialEffects;
 import net.minecraft.client.renderer.SkyRenderer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -16,5 +17,13 @@ public class SkyRendererMixin {
     )
     private int extractRenderStateMoonPhase(ClientLevel instance, Operation<Integer> original) {
         return Config.INSTANCE.getMoonPhaseChanger() ? Config.INSTANCE.getMoonPhase().getPhase() : original.call(instance);
+    }
+
+    @WrapOperation(
+            method = "extractRenderState",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/DimensionSpecialEffects;skyType()Lnet/minecraft/client/renderer/DimensionSpecialEffects$SkyType;")
+    )
+    private DimensionSpecialEffects.SkyType extractRenderStateSkyType(DimensionSpecialEffects instance, Operation<DimensionSpecialEffects.SkyType> original) {
+        return Config.INSTANCE.getSkyTypeChanger() ? DimensionSpecialEffects.SkyType.values()[Config.INSTANCE.getSkyType().ordinal()] : original.call(instance);
     }
 }

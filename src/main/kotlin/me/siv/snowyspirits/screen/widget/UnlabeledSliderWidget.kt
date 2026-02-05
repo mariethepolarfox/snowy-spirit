@@ -10,8 +10,8 @@ import net.minecraft.client.renderer.RenderPipelines
 //? if > 1.21.10 {
 import net.minecraft.util.Util
 //? } else {
-/*import net.minecraft.Util*/
-//? }
+/*import net.minecraft.Util
+*///? }
 
 class UnlabeledSliderWidget<T: Number>(
     initState: State<T>,

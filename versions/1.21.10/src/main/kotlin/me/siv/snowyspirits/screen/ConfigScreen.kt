@@ -44,6 +44,7 @@ class ConfigScreen : Overlay(null) {
 
         val weatherDropdownState = DropdownState.of(Config.weatherType)
         val precipitationDropdownState = DropdownState.of(Config.precipitation)
+        val skyTypeState = DropdownState.of(Config.skyType)
 
         val lightningChanceState = ListenableState<Int>.of(Config.lightningChance)
         lightningChanceState.registerListener { newValue ->
@@ -258,6 +259,49 @@ class ConfigScreen : Overlay(null) {
         if (moonPhaseWidget != null) moonChangerVerticalLayout.withChild(moonPhaseWidget)
         if (moonRenderer != null) moonChangerVerticalLayout.withChild(moonRenderer)
 
+        var skyTypeFrameHeight = 30
+
+        val skyTypeChangerMainToggle = Widgets.labelled(
+            mc.font,
+            Component.translatable("config.snowyspirits.skyTypeChanger"),
+            createColoredToggleButton(
+                { Config.skyTypeChanger },
+                "Sky Type Changer",
+            ) { newVal ->
+                Config.skyTypeChanger = newVal
+                this.rebuildWidgets()
+            }
+        ).withEqualSpacing(Orientation.HORIZONTAL)
+
+        var skyTypeWidget: LayoutElement? = null
+
+        if (Config.skyTypeChanger) {
+            skyTypeFrameHeight += 25
+            skyTypeWidget = Widgets.labelled(
+                mc.font,
+                Component.translatable("config.snowyspirits.skyType"),
+                Widgets.dropdown(
+                    skyTypeState,
+                    Config.SkyType.entries,
+                    { Component.literal(it.name.replace("_", " ").lowercase().replaceFirstChar { char -> char.uppercase() }) },
+                    {
+                        it.withSize(100, 20).withTexture(UIConstants.BUTTON)
+                    }
+                ) {
+                    it.withSize(100, 20 * Config.SkyType.entries.size + 4)
+                        .withTexture(UIConstants.MODAL_INSET)
+                        .withCallback { newVal ->
+                            Config.skyType = newVal
+                        }
+                }
+            ).withEqualSpacing(Orientation.HORIZONTAL)
+        }
+
+        val skyChangerVertivalLayout = Layouts.column()
+            .withGap(5)
+            .withChild(skyTypeChangerMainToggle)
+        if (skyTypeWidget != null) skyChangerVertivalLayout.withChild(skyTypeWidget)
+
         when (tab) {
             0 -> {
                 mainScrollableList.add(
@@ -305,6 +349,18 @@ class ConfigScreen : Overlay(null) {
                         .withContentMargin(5)
                 )
             }
+            2 -> {
+                mainScrollableList.add(
+                    Widgets.frame()
+                        .withSize(mainScrollableList.width, skyTypeFrameHeight)
+                        .withTexture(UIConstants.MODAL_INSET)
+                        .withContents {
+                            it.addChild(skyChangerVertivalLayout)
+                        }
+                        .withContentFill()
+                        .withContentMargin(5)
+                )
+            }
             else -> {}
         }
 
@@ -326,6 +382,7 @@ class ConfigScreen : Overlay(null) {
                     { builder ->
                         builder.withOption("Weather")
                             .withOption("Time")
+                            .withOption("Rendering")
                             .withSize((width / 4), 20)
                             .withoutEntrySprites()
                             .withRenderer { string, bool ->
@@ -338,6 +395,7 @@ class ConfigScreen : Overlay(null) {
                                 tab = when (newVal) {
                                     "Weather" -> 0
                                     "Time" -> 1
+                                    "Rendering" -> 2
                                     else -> 0
                                 }
                                 this.repositionElements()
