@@ -16,5 +16,4 @@ fabricApi = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabr
 resourcefulconfig = { module = "com.teamresourceful.resourcefulconfig:resourcefulconfig-fabric-1.21.11", version.ref = "resourcefulConfig" }
 
 modmenu = { module = "com.terraformersmc:modmenu", version.ref = "modmenu" }
-olympus-common = { module = "earth.terrarium.olympus:olympus-common-1.21.11", version.ref = "olympus" }
-olympus-fabric = { module = "earth.terrarium.olympus:olympus-fabric-1.21.11", version.ref = "olympus" }
+olympus = { module = "earth.terrarium.olympus:olympus-fabric-1.21.11", version.ref = "olympus" }
