@@ -15,11 +15,11 @@
         "client": [
             {
                 "adapter": "kotlin",
-                "value": "me.siv.snowyspirits.SnowySpirits"
+                "value": "me.marie.snowyspirits.SnowySpirits"
             }
         ],
         "modmenu": [
-            "me.siv.snowyspirits.config.ModMenuCompat"
+            "me.marie.snowyspirits.config.ModMenuCompat"
         ]
     },
     "mixins": [
@@ -30,5 +30,5 @@
         "fabric": "*",
         "minecraft": "${minecraft_version}"
     },
-    "accessWidener": "snowyspirits.accesswidener"
+    "accessWidener": "${accesswidener}"
 }

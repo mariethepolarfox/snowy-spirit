@@ -6,7 +6,7 @@ plugins {
     idea
     kotlin("jvm") version "2.3.20"
     alias(libs.plugins.kotlin.symbol.processor)
-    alias(libs.plugins.loom.unobf)
+    alias(libs.plugins.loom.obf)
     alias(libs.plugins.auto.mixins)
     `versioned-catalogues`
 }
@@ -19,25 +19,26 @@ repositories {
 
 dependencies {
     minecraft(versionedCatalog["minecraft"])
+    mappings(loom.officialMojangMappings())
 
-    implementation(libs.fabricLoader)
-    implementation(versionedCatalog["fabricApi"])
-    implementation(libs.fabricKt)
+    modImplementation(libs.fabricLoader)
+    modImplementation(versionedCatalog["fabricApi"])
+    modImplementation(libs.fabricKt)
 
-    implementation(libs.devauth)
+    modImplementation(libs.devauth)
 
-    implementation(versionedCatalog["resourcefulconfig"])
-    implementation(libs.resourcefulconfigkt)
+    modImplementation(versionedCatalog["resourcefulconfig"])
+    modImplementation(libs.resourcefulconfigkt)
     include(libs.resourcefulconfigkt)
 
-    implementation(versionedCatalog["modmenu"])
+    modImplementation(versionedCatalog["modmenu"])
 
     include(versionedCatalog["olympus"])
-    implementation(versionedCatalog["olympus"])
+    modImplementation(versionedCatalog["olympus"])
 }
 
 loom {
-    accessWidenerPath = rootProject.file("src/main/resources/snowyspirits.accesswidener")
+    accessWidenerPath = rootProject.file("src/main/resources/snowyspirits.obf.accesswidener")
     runConfigs["client"].apply {
         ideConfigGenerated(true)
         runDir = "../../run"
@@ -51,14 +52,14 @@ tasks {
         inputs.property("version", project.version)
         inputs.property("minecraft_version", versionedCatalog.versions["minecraft"])
         inputs.property("loader_version", libs.versions.fabricLoader.get())
-        inputs.property("accesswidener", "snowyspirits.accesswidener")
+        inputs.property("accesswidener", "snowyspirits.obf.accesswidener")
 
         filesMatching("fabric.mod.json") {
             expand(
                 "version" to project.version,
                 "loader_version" to libs.versions.fabricLoader.get(),
                 "minecraft_version" to versionedCatalog.versions["minecraft"],
-                "accesswidener" to "snowyspirits.accesswidener",
+                "accesswidener" to "snowyspirits.obf.accesswidener",
             )
         }
     }

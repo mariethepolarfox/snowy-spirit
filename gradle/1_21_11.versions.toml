@@ -1,11 +1,11 @@
 [versions]
 
 minecraft = "1.21.11"
-fabricApi = "0.141.2+1.21.11"
+fabricApi = "0.141.3+1.21.11"
 
 resourcefulConfig = "3.11.0"
 
-modmenu = "17.0.0-beta.2"
+modmenu = "17.0.0"
 olympus = "1.7.1"
 
 [libraries]

@@ -22,7 +22,8 @@ resourcefulconfigkt = { module = "com.teamresourceful.resourcefulconfigkt:resour
 devauth = { module = "me.djtheredstoner:DevAuth-fabric", version.ref = "devauth" }
 
 [plugins]
-loom = { id = "fabric-loom", version.ref = "loom" }
+loom-unobf = { id = "net.fabricmc.fabric-loom", version.ref = "loom" }
+loom-obf = { id = "net.fabricmc.fabric-loom-remap", version.ref = "loom" }
 auto-mixins = { id = "me.owdding.auto-mixins", version.ref = "auto-mixins" }
 
 kotlin-symbol-processor = { id = "com.google.devtools.ksp", version.ref = "kotlin-symbol-processor" }

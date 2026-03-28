@@ -19,7 +19,9 @@ val versions = listOf("1.21.11", "26.1", "1.21.10")
 
 stonecutter {
     create(rootProject) {
-        versions(versions)
+        versions.forEach { version ->
+            version(version).buildscript = if (stonecutter.eval(version, ">=26.1")) "build.gradle.kts" else "build.obf.gradle.kts"
+        }
         vcsVersion = versions.first()
     }
 }
