@@ -4,7 +4,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     java
     idea
-    kotlin("jvm") version "2.3.0"
+    kotlin("jvm") version "2.3.20"
     alias(libs.plugins.kotlin.symbol.processor)
     alias(libs.plugins.loom)
     alias(libs.plugins.auto.mixins)
@@ -19,7 +19,7 @@ repositories {
 
 dependencies {
     minecraft(versionedCatalog["minecraft"])
-    mappings(loom.officialMojangMappings())
+    if (!isPostUnobf()) mappings(loom.officialMojangMappings())
 
     modImplementation(libs.fabricLoader)
     modImplementation(versionedCatalog["fabricApi"])
@@ -68,7 +68,7 @@ tasks {
 
     compileKotlin {
         compilerOptions {
-            jvmTarget = JvmTarget.JVM_21
+            jvmTarget = preOrPostUnobf(JvmTarget.JVM_21, JvmTarget.JVM_25)
         }
     }
 
@@ -87,12 +87,12 @@ tasks.withType<ValidateAccessWidenerTask> { enabled = false }
 
 java {
     withSourcesJar()
-    targetCompatibility = JavaVersion.VERSION_21
-    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = preOrPostUnobf(JavaVersion.VERSION_21, JavaVersion.VERSION_25)
+    sourceCompatibility = preOrPostUnobf(JavaVersion.VERSION_21, JavaVersion.VERSION_25)
 }
 
 kotlin {
-    jvmToolchain(21)
+    jvmToolchain(preOrPostUnobf(21, 25))
 }
 
 autoMixins {
@@ -104,4 +104,10 @@ idea {
     module {
         excludeDirs.add(file("run"))
     }
+}
+
+fun isPostUnobf(): Boolean = stonecutter.eval(stonecutter.current.version, ">=26.1")
+
+fun <T> preOrPostUnobf(pre: T, post: T): T {
+    return if (isPostUnobf()) post else pre
 }

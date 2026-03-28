@@ -1,9 +1,9 @@
 [versions]
 
 # Minecraft
-fabricLoader = "0.18.3"
-fabricKt = "1.13.8+kotlin.2.3.0"
-loom = "1.14-SNAPSHOT"
+fabricLoader = "0.18.5"
+fabricKt = "1.13.10+kotlin.2.3.20"
+loom = "1.15-SNAPSHOT"
 resourcefulConfigKt = "3.5.15"
 
 kotlin-symbol-processor = "2.3.4"

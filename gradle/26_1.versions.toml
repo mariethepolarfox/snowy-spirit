@@ -1,0 +1,19 @@
+[versions]
+
+minecraft = "26.1"
+fabricApi = "0.144.3+26.1"
+
+resourcefulConfig = "4.0.0"
+
+modmenu = "18.0.0-alpha.8"
+olympus = "1.8.0"
+
+[libraries]
+
+minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft" }
+fabricApi = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabricApi" }
+
+resourcefulconfig = { module = "com.teamresourceful.resourcefulconfig:resourcefulconfig-fabric-26.1", version.ref = "resourcefulConfig" }
+
+modmenu = { module = "com.terraformersmc:modmenu", version.ref = "modmenu" }
+olympus = { module = "earth.terrarium.olympus:olympus-fabric-26.1", version.ref = "olympus" }
