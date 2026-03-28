@@ -52,14 +52,12 @@ tasks {
         inputs.property("version", project.version)
         inputs.property("minecraft_version", versionedCatalog.versions["minecraft"])
         inputs.property("loader_version", libs.versions.fabricLoader.get())
-        inputs.property("accesswidener", "snowyspirits.obf.accesswidener")
 
         filesMatching("fabric.mod.json") {
             expand(
                 "version" to project.version,
                 "loader_version" to libs.versions.fabricLoader.get(),
                 "minecraft_version" to versionedCatalog.versions["minecraft"],
-                "accesswidener" to "snowyspirits.obf.accesswidener",
             )
         }
     }
