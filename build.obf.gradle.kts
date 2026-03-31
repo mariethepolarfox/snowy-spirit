@@ -37,8 +37,9 @@ dependencies {
     modImplementation(versionedCatalog["olympus"])
 }
 
+val accessWidenerFile = rootProject.file("src/snowyspirits.obf.accesswidener")
 loom {
-    accessWidenerPath = rootProject.file("src/main/resources/snowyspirits.obf.accesswidener")
+    accessWidenerPath = accessWidenerFile
     runConfigs["client"].apply {
         ideConfigGenerated(true)
         runDir = "../../run"
@@ -60,6 +61,11 @@ tasks {
                 "minecraft_version" to versionedCatalog.versions["minecraft"],
             )
         }
+
+        with(copySpec {
+            from(accessWidenerFile)
+            rename { it.replace(".obf", "") }
+        })
     }
 
     jar {
