@@ -6,7 +6,9 @@ fabricKt = "1.13.8+kotlin.2.3.0"
 loom = "1.14-SNAPSHOT"
 resourcefulConfigKt = "3.5.15"
 
-kotlin-symbol-processor = "2.3.4"
+kotlin = "2.3.0"
+kotlin-gradle-plugin = "2.3.0"
+kotlin-symbol-processor = "2.3.5"
 
 auto-mixins = "1.0.10"
 
@@ -21,8 +23,13 @@ resourcefulconfigkt = { module = "com.teamresourceful.resourcefulconfigkt:resour
 
 devauth = { module = "me.djtheredstoner:DevAuth-fabric", version.ref = "devauth" }
 
+kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }
+kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin-gradle-plugin" }
+kotlin-gradle-plugin-api = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin-api", version.ref = "kotlin-gradle-plugin" }
+
 [plugins]
-loom = { id = "fabric-loom", version.ref = "loom" }
+loom = { id = "net.fabricmc.fabric-loom", version.ref = "loom" }
+loom-remap = { id = "net.fabricmc.fabric-loom-remap", version.ref = "loom" }
 auto-mixins = { id = "me.owdding.auto-mixins", version.ref = "auto-mixins" }
 
 kotlin-symbol-processor = { id = "com.google.devtools.ksp", version.ref = "kotlin-symbol-processor" }
