@@ -36,8 +36,9 @@ dependencies {
     implementation(versionedCatalog["olympus"])
 }
 
+var accessWidenerFile = rootProject.file("src/snowyspirits.accesswidener")
 loom {
-    accessWidenerPath = rootProject.file("src/main/resources/snowyspirits.accesswidener")
+    accessWidenerPath = accessWidenerFile
     runConfigs["client"].apply {
         ideConfigGenerated(true)
         runDir = "../../run"
@@ -59,6 +60,10 @@ tasks {
                 "minecraft_version" to versionedCatalog.versions["minecraft"],
             )
         }
+
+        with(copySpec {
+            from(accessWidenerFile)
+        })
     }
 
     jar {
