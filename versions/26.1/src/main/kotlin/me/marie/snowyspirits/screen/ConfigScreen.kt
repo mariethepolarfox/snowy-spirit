@@ -421,7 +421,7 @@ class ConfigScreen : Overlay(null) {
                         it.addChild(
                             Widgets.labelled(
                                 mc.font,
-                                Component.literal("Meow"),
+                                Component.literal("Snowy Config"),
                                 Widgets.button()
                                     .withTexture(null)
                                     .withRenderer(WidgetRenderers.sprite(UIConstants.MODAL_CLOSE))
