@@ -12,6 +12,7 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.storage.WritableLevelData;
 import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin(ClientLevel.class)
@@ -50,16 +51,8 @@ public abstract class ClientLevelMixin extends Level {
     }
 
     @Override
-    public Biome.@NotNull Precipitation precipitationAt(BlockPos blockPos) {
+    public Biome.@NotNull Precipitation precipitationAt(@NonNull BlockPos blockPos) {
         if (Config.INSTANCE.getWeatherChanger()) return Config.INSTANCE.getPrecipitation();
         return super.precipitationAt(blockPos);
     }
-
-    //? if < 1.21.11 {
-    /*@Override
-    public int getMoonPhase() {
-        if (Config.INSTANCE.getMoonPhaseChanger()) return Config.INSTANCE.getMoonPhase().getPhase();
-        return super.getMoonPhase();
-    }
-    *///? }
 }

@@ -2,11 +2,10 @@ package me.marie.snowyspirits.mixins;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import me.marie.snowyspirits.config.Config;
+import com.mojang.blaze3d.systems.RenderSystem;
+import me.marie.snowyspirits.handlers.AttributeProbeHandler;
 import net.minecraft.world.attribute.EnvironmentAttribute;
 import net.minecraft.world.attribute.EnvironmentAttributeProbe;
-import net.minecraft.world.attribute.EnvironmentAttributes;
-import net.minecraft.world.level.MoonPhase;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
@@ -17,8 +16,9 @@ public class EnvironmentAttributeProbeMixin {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/attribute/EnvironmentAttributeProbe$ValueProbe;get(Lnet/minecraft/world/attribute/EnvironmentAttribute;F)Ljava/lang/Object;")
     )
     private <T> T modifyGetValueReturn(EnvironmentAttributeProbe.ValueProbe instance, EnvironmentAttribute<T> environmentAttribute, float f, Operation<T> original) {
-        if (environmentAttribute == EnvironmentAttributes.MOON_PHASE && Config.INSTANCE.getMoonPhaseChanger()) {
-            return (T) MoonPhase.values()[Config.INSTANCE.getMoonPhase().getPhase()];
+        T value = AttributeProbeHandler.handleProbe(environmentAttribute, f);
+        if (value != null) {
+            return value;
         }
         return original.call(instance, environmentAttribute, f);
     }

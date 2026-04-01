@@ -2,6 +2,9 @@ accessWidener v2 official
 accessible field net/minecraft/world/entity/LightningBolt life I
 accessible field net/minecraft/world/entity/LightningBolt flashes I
 accessible field net/minecraft/world/entity/LightningBolt visualOnly Z
-
-# 1.21.11
 accessible class net/minecraft/world/attribute/EnvironmentAttributeProbe$ValueProbe
+
+#26.1
+accessible class net/minecraft/client/ClientClockManager$ClockInstance
+accessible method net/minecraft/client/ClientClockManager$ClockInstance <init> ()V
+accessible field net/minecraft/client/ClientClockManager$ClockInstance totalTicks J

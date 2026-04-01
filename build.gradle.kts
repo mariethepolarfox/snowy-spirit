@@ -100,7 +100,7 @@ kotlin {
 }
 
 autoMixins {
-    mixinPackage = "me.siv.snowyspirits.mixins"
+    mixinPackage = "me.marie.snowyspirits.mixins"
     projectName = "snowyspirits"
 }
 
