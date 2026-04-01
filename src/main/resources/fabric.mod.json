@@ -30,8 +30,5 @@
         "fabric-api": "*",
         "minecraft": "${minecraft_version}"
     },
-    "provides": [
-        "fabric"
-    ],
     "accessWidener": "snowyspirits.accesswidener"
 }

@@ -4,7 +4,6 @@
 fabricLoader = "0.18.5"
 fabricKt = "1.13.10+kotlin.2.3.20"
 loom = "1.15-SNAPSHOT"
-resourcefulConfigKt = "3.5.15"
 
 kotlin-symbol-processor = "2.3.4"
 
@@ -17,7 +16,6 @@ devauth = "1.2.2"
 
 fabricLoader = { module = "net.fabricmc:fabric-loader", version.ref = "fabricLoader" }
 fabricKt = { module = "net.fabricmc:fabric-language-kotlin", version.ref = "fabricKt" }
-resourcefulconfigkt = { module = "com.teamresourceful.resourcefulconfigkt:resourcefulconfigkt-fabric-1.21.5", version.ref = "resourcefulConfigKt" }
 
 devauth = { module = "me.djtheredstoner:DevAuth-fabric", version.ref = "devauth" }
 

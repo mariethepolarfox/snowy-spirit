@@ -4,6 +4,7 @@ minecraft = "1.21.11"
 fabricApi = "0.141.3+1.21.11"
 
 resourcefulConfig = "3.11.0"
+resourcefulConfigKt = "3.5.15"
 
 modmenu = "17.0.0"
 olympus = "1.7.1"
@@ -14,6 +15,7 @@ minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft" }
 fabricApi = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabricApi" }
 
 resourcefulconfig = { module = "com.teamresourceful.resourcefulconfig:resourcefulconfig-fabric-1.21.11", version.ref = "resourcefulConfig" }
+resourcefulconfigkt = { module = "com.teamresourceful.resourcefulconfigkt:resourcefulconfigkt-fabric-1.21.5", version.ref = "resourcefulConfigKt" }
 
 modmenu = { module = "com.terraformersmc:modmenu", version.ref = "modmenu" }
 olympus = { module = "earth.terrarium.olympus:olympus-fabric-1.21.11", version.ref = "olympus" }

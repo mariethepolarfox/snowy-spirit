@@ -27,8 +27,8 @@ dependencies {
     implementation(libs.devauth)
 
     implementation(versionedCatalog["resourcefulconfig"])
-    implementation(libs.resourcefulconfigkt)
-    include(libs.resourcefulconfigkt)
+    implementation(versionedCatalog["resourcefulconfigkt"])
+    include(versionedCatalog["resourcefulconfigkt"])
 
     implementation(versionedCatalog["modmenu"])
 

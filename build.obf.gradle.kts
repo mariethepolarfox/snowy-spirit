@@ -28,8 +28,8 @@ dependencies {
     modImplementation(libs.devauth)
 
     modImplementation(versionedCatalog["resourcefulconfig"])
-    modImplementation(libs.resourcefulconfigkt)
-    include(libs.resourcefulconfigkt)
+    modImplementation(versionedCatalog["resourcefulconfigkt"])
+    include(versionedCatalog["resourcefulconfigkt"])
 
     modImplementation(versionedCatalog["modmenu"])
 
