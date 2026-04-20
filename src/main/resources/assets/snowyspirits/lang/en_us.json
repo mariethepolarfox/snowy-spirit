@@ -1,10 +1,12 @@
 {
   "config.snowyspirits.weatherChanger": "Weather Changer",
   "config.snowyspirits.weatherChanger.desc": "Enables changing the weather",
+  "config.snowyspirits.weatherChanger.toggle": "Toggle weather changer",
   "config.snowyspirits.noPrecipitationBlocking": "Stop blocks stopping Precipitation",
   "config.snowyspirits.noPrecipitationBlocking.desc": "Stops blocks stopping precipitation making it render everywhere",
   "config.snowyspirits.timeChanger" : "Time Changer",
   "config.snowyspirits.timeChanger.desc": "Enables changing the time",
+  "config.snowyspirits.timeChanger.toggle": "Toggle time changer",
   "config.snowyspirits.time": "Time",
   "config.snowyspirits.time.desc": "Changes the time of day",
   "config.snowyspirits.precipitation": "Precipitation Type",
@@ -15,10 +17,12 @@
   "config.snowyspirits.lightningChance.desc": "Lightning Chance in 1/(chance)",
   "config.snowyspirits.moonPhaseChanger": "Moon Phase Changer",
   "config.snowyspirits.moonPhaseChanger.desc": "Changes moon phase AWOOOOO",
+  "config.snowyspirits.moonPhaseChanger.toggle": "Toggle moon phase changer",
   "config.snowyspirits.moonPhase": "Moon Phase",
   "config.snowyspirits.moonPhase.desc": "Moon phase to set",
   "config.snowyspirits.skyTypeChanger": "Sky Type Changer",
   "config.snowyspirits.skyTypeChanger.desc": "Changes the sky type",
+  "config.snowyspirits.skyTypeChanger.toggle": "Toggle sky type changer",
   "config.snowyspirits.skyType": "Sky Type",
   "config.snowyspirits.skyType.desc": "Sky type to set"
 }
