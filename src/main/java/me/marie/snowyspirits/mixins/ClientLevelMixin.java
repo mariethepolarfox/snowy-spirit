@@ -1,6 +1,7 @@
 package me.marie.snowyspirits.mixins;
 
 import me.marie.snowyspirits.config.Config;
+import me.marie.snowyspirits.handlers.ValueCache;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -24,9 +25,11 @@ public abstract class ClientLevelMixin extends Level {
 
     @Override
     public float getRainLevel(float f) {
+        float rainLevel = super.getRainLevel(f);
+        ValueCache.setRainLevel(rainLevel);
         if (Config.INSTANCE.getWeatherChanger())
             return Config.INSTANCE.getWeatherType() != TestEnvironmentDefinition.Weather.Type.CLEAR ? 1.0f : 0.0f;
-        return super.getRainLevel(f);
+        return rainLevel;
     }
 
     @Override
@@ -54,5 +57,11 @@ public abstract class ClientLevelMixin extends Level {
     public Biome.@NotNull Precipitation precipitationAt(@NonNull BlockPos blockPos) {
         if (Config.INSTANCE.getWeatherChanger()) return Config.INSTANCE.getPrecipitation();
         return super.precipitationAt(blockPos);
+    }
+
+    @Override
+    public boolean isRainingAt(@NonNull BlockPos pos) {
+        if (!Config.INSTANCE.getWeatherChanger()) return super.isRainingAt(pos);
+        return ValueCache.isRainingAt(pos, this);
     }
 }
