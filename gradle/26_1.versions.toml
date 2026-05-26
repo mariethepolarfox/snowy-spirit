@@ -1,6 +1,7 @@
 [versions]
 
 minecraft = "26.1"
+minecraft-range = "26.1.x"
 fabricApi = "0.145.1+26.1"
 
 resourcefulConfig = "4.0.0"
