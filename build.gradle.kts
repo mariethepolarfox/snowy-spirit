@@ -49,15 +49,22 @@ loom {
 
 tasks {
     processResources {
+        val range = if (versionedCatalog.versions.has("minecraft.range")) {
+            versionedCatalog.versions.get("minecraft.range").toString()
+        } else {
+            val start = versionedCatalog.versions.getOrFallback("minecraft.start", "minecraft")
+            val end = versionedCatalog.versions.getOrFallback("minecraft.end", "minecraft")
+            ">=$start <=$end"
+        }
         inputs.property("version", project.version)
-        inputs.property("minecraft_version", versionedCatalog.versions["minecraft"])
+        inputs.property("minecraft_version", range)
         inputs.property("loader_version", libs.versions.fabricLoader.get())
 
         filesMatching("fabric.mod.json") {
             expand(
                 "version" to project.version,
                 "loader_version" to libs.versions.fabricLoader.get(),
-                "minecraft_version" to versionedCatalog.versions["minecraft"],
+                "minecraft_version" to range,
             )
         }
 
