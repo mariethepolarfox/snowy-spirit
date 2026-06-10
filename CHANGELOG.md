@@ -1,2 +1,4 @@
 ## %version%
-- Fixes not being able to launch on 26.1.x
+- Adds Custom End Flashes
+  - Allows customization of the interval, min and max duration
+  - Also works in the end when the SkyChanger is turned off
