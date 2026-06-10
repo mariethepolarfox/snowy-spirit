@@ -157,19 +157,10 @@ publishMods {
             }
         }
 
-        requires {
-            id.set("P7dR8mSH")
-            slug.set("fabric-api")
-        }
-        requires {
-            id.set("Ha28R6CL")
-            slug.set("fabric-language-kotlin")
-        }
+        requires("fabric-api")
+        requires("fabric-language-kotlin")
 
-        optional {
-            id.set("mOgUt4GM")
-            slug.set("modmenu")
-        }
+        optional("modmenu")
     }
 
     dryRun.set(modrinthToken.orNull == null)
