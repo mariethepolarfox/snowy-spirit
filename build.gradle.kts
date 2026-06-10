@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.kotlin.symbol.processor)
     alias(libs.plugins.loom.unobf)
     alias(libs.plugins.auto.mixins)
+    alias(libs.plugins.mod.publishing)
     `versioned-catalogues`
 }
 
@@ -50,7 +51,7 @@ loom {
 tasks {
     processResources {
         val range = if (versionedCatalog.versions.has("minecraft.range")) {
-            versionedCatalog.versions.get("minecraft.range").toString()
+            versionedCatalog.versions["minecraft.range"].toString()
         } else {
             val start = versionedCatalog.versions.getOrFallback("minecraft.start", "minecraft")
             val end = versionedCatalog.versions.getOrFallback("minecraft.end", "minecraft")
@@ -75,6 +76,7 @@ tasks {
 
     jar {
         from("LICENSE")
+        archiveFileName.set("SnowySpirits-$version-${stonecutter.current.version}.jar")
     }
 
     compileKotlin {
@@ -85,7 +87,7 @@ tasks {
 
     build {
         doLast {
-            val sourceFile = rootProject.projectDir.resolve("versions/${project.name}/build/libs/${stonecutter.current.version}-$version.jar")
+            val sourceFile = rootProject.projectDir.resolve("versions/${project.name}/build/libs/SnowySpirits-$version-${stonecutter.current.version}.jar")
             val targetFile = rootProject.projectDir.resolve("build/libs/SnowySpirits-$version-${stonecutter.current.version}.jar")
             targetFile.parentFile.mkdirs()
             targetFile.writeBytes(sourceFile.readBytes())
@@ -115,6 +117,57 @@ idea {
     module {
         excludeDirs.add(file("run"))
     }
+}
+
+publishMods {
+    val modrinthToken = providers.environmentVariable("MODRINTH_TOKEN")
+    val ver = project.version
+
+    var changelogText = rootProject.file("CHANGELOG.md").readText()
+    val replacements = mapOf(
+        "%version%" to ver.toString(),
+    )
+
+    replacements.forEach { (placeholder, value) ->
+        changelogText = changelogText.replace(placeholder, value)
+    }
+
+    displayName.set("SnowySpirits $ver")
+    changelog.set(changelogText)
+
+    file.set(tasks.jar.get().archiveFile)
+    type.set(BETA)
+    modLoaders.add("fabric")
+
+    modrinth {
+        accessToken.set(modrinthToken)
+        projectId.set("hAEGcgZe")
+
+        if (versionedCatalog.versions.has("minecraft.range")) {
+            minecraftVersions.add(versionedCatalog.versions["minecraft.range"].toString())
+        } else {
+            minecraftVersionRange {
+                start.set(versionedCatalog.versions.getOrFallback("minecraft.start", "minecraft").toString())
+                end.set(versionedCatalog.versions.getOrFallback("minecraft.end", "minecraft").toString())
+            }
+        }
+
+        requires {
+            id.set("P7dR8mSH")
+            slug.set("fabric-api")
+        }
+        requires {
+            id.set("Ha28R6CL")
+            slug.set("fabric-language-kotlin")
+        }
+
+        optional {
+            id.set("mOgUt4GM")
+            slug.set("modmenu")
+        }
+    }
+
+    dryRun.set(modrinthToken.orNull == null)
 }
 
 fun isPostUnobf(): Boolean = stonecutter.eval(stonecutter.current.version, ">=26.1")

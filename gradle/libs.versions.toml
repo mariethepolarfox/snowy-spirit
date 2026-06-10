@@ -11,6 +11,7 @@ auto-mixins = "1.0.10"
 
 # Dev Dependencies
 devauth = "1.2.2"
+mod-publishing = "2.0.0"
 
 [libraries]
 
@@ -25,3 +26,5 @@ loom-obf = { id = "net.fabricmc.fabric-loom-remap", version.ref = "loom" }
 auto-mixins = { id = "me.owdding.auto-mixins", version.ref = "auto-mixins" }
 
 kotlin-symbol-processor = { id = "com.google.devtools.ksp", version.ref = "kotlin-symbol-processor" }
+
+mod-publishing = { id = "me.modmuss50.mod-publish-plugin", version.ref = "mod-publishing" }
