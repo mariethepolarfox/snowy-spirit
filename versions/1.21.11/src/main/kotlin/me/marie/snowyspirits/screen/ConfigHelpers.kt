@@ -93,13 +93,15 @@ fun labeledSlider(
     state: ListenableState<Int>,
     min: Int,
     max: Int,
+    ignoreMin: Boolean = false,
+    ignoreMax: Boolean = false,
     width: Int = 100,
     height: Int = 20
 ): LayoutElement {
     return Widgets.labelled(
         mc.font,
         Component.translatable(translationKey),
-        SliderWidget(state, min, max).withSize(width, height)
+        SliderWidget(state, min, max, ignoreMin, ignoreMax).withSize(width, height)
     ).withEqualSpacing(Orientation.HORIZONTAL)
 }
 

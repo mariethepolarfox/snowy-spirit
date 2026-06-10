@@ -5,7 +5,8 @@ import com.teamresourceful.resourcefulconfig.api.loader.Configurator
 import com.teamresourceful.resourcefulconfig.api.types.ResourcefulConfig
 import me.marie.snowyspirits.config.Config
 import me.marie.snowyspirits.screen.ConfigScreen
-import me.marie.snowyspirits.utils.LightningBoltUtil
+import me.marie.snowyspirits.utils.EndFlashUtil
+import me.marie.snowyspirits.utils.LightningUtil
 import net.fabricmc.api.ClientModInitializer
 //? if <=1.21.11 {
 /*import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager as ClientCommands*/
@@ -23,7 +24,6 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLevelEvents
 //? }
 import net.minecraft.client.Minecraft
 import net.minecraft.commands.CommandBuildContext
-import net.minecraft.gametest.framework.TestEnvironmentDefinition
 import net.minecraft.world.level.chunk.LevelChunk
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -42,18 +42,18 @@ object SnowySpirits : ClientModInitializer, Logger by LoggerFactory.getLogger(MO
         config = Config.register(configurator)
 
         ClientCommandRegistrationCallback.EVENT.register(::onRegisterCommands)
-        ClientTickEvents.END_CLIENT_TICK.register { client ->
-            tickThunder()
-            LightningBoltUtil.tickBolts()
+        ClientTickEvents.END_CLIENT_TICK.register { _ ->
+            LightningUtil.tickThunder(chunkList.toList())
+            EndFlashUtil.tick()
         }
 
         // Handle chunks
-        ClientChunkEvents.CHUNK_LOAD.register { level, chunk -> chunkList.add(chunk) }
-        ClientChunkEvents.CHUNK_UNLOAD.register { level, chunk -> chunkList.remove(chunk) }
+        ClientChunkEvents.CHUNK_LOAD.register { _, chunk -> chunkList.add(chunk) }
+        ClientChunkEvents.CHUNK_UNLOAD.register { _, chunk -> chunkList.remove(chunk) }
 
         ClientLevelEvents
             ./*? if <=1.21.11 {*//*AFTER_CLIENT_WORLD_CHANGE*//*? } else {*/AFTER_CLIENT_LEVEL_CHANGE/*? }*/
-            .register { _, world -> chunkList.clear() }
+            .register { _, _ -> chunkList.clear() }
     }
 
     private fun onRegisterCommands(
@@ -61,16 +61,10 @@ object SnowySpirits : ClientModInitializer, Logger by LoggerFactory.getLogger(MO
         buildContext: CommandBuildContext
     ) {
         dispatcher.register(
-            ClientCommands.literal("snowyspirits").executes { context ->
+            ClientCommands.literal("snowyspirits").executes { _ ->
                 mc.schedule { mc.setScreen(ConfigScreen()) }
                 1
             })
-    }
-
-    private fun tickThunder() {
-        if (Config.weatherChanger && Config.weatherType == TestEnvironmentDefinition.Weather.Type.THUNDER) {
-            chunkList.forEach(LightningBoltUtil::tickChunkThunder)
-        }
     }
 
     fun saveConfig() {

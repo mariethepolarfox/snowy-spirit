@@ -1,8 +1,10 @@
 package me.marie.snowyspirits.mixins;
 
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import me.marie.snowyspirits.config.Config;
 import me.marie.snowyspirits.handlers.ValueCache;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.renderer.EndFlashState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
@@ -14,7 +16,9 @@ import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.storage.WritableLevelData;
 import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.NonNull;
+import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(ClientLevel.class)
 public abstract class ClientLevelMixin extends Level {
@@ -34,9 +38,11 @@ public abstract class ClientLevelMixin extends Level {
 
     @Override
     public float getThunderLevel(float f) {
+        float thunderLevel = super.getThunderLevel(f);
+        ValueCache.setThunderLevel(thunderLevel);
         if (Config.INSTANCE.getWeatherChanger())
             return Config.INSTANCE.getWeatherType() == TestEnvironmentDefinition.Weather.Type.THUNDER ? 1.0f : 0.0f;
-        return super.getThunderLevel(f);
+        return thunderLevel;
     }
 
     @Override
@@ -63,5 +69,17 @@ public abstract class ClientLevelMixin extends Level {
     public boolean isRainingAt(@NonNull BlockPos pos) {
         if (!Config.INSTANCE.getWeatherChanger()) return super.isRainingAt(pos);
         return ValueCache.isRainingAt(pos, this);
+    }
+
+    @ModifyExpressionValue(
+            method = "tick",
+            at = @At(
+                    value = "FIELD",
+                    target = "Lnet/minecraft/client/multiplayer/ClientLevel;endFlashState:Lnet/minecraft/client/renderer/EndFlashState;",
+                    opcode = Opcodes.GETFIELD
+            )
+    )
+    private EndFlashState modifyEndFlashState(EndFlashState original) {
+        return Config.INSTANCE.getCustomEndFlashes() ? null : original;
     }
 }

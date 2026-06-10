@@ -17,3 +17,12 @@ fun Double.roundToMaxDec(maxDecimals: Int): Double {
     val decToUse = if (decimals < maxDecimals) decimals else maxDecimals
     return this.rounded(decToUse)
 }
+
+fun Double.tryCoerceIn(min: Double, max: Double, ignoreMinValue: Boolean, ignoreMaxValue: Boolean): Double {
+    return when {
+        ignoreMinValue && ignoreMaxValue -> this
+        ignoreMinValue -> this.coerceAtMost(max)
+        ignoreMaxValue -> this.coerceAtLeast(min)
+        else -> this.coerceIn(min, max)
+    }
+}

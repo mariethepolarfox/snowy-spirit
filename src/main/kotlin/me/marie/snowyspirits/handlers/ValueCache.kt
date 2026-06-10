@@ -9,8 +9,15 @@ object ValueCache {
     @JvmStatic
     var rainLevel = 0f
 
+    @JvmStatic
+    var thunderLevel = 0f
+
     private fun cachedIsRaining(level: Level): Boolean {
         return level.canHaveWeather() && rainLevel > 0.2f
+    }
+
+    fun cachedIsThundering(level: Level): Boolean {
+        return level.canHaveWeather() && thunderLevel > 0.9f
     }
 
     @JvmStatic

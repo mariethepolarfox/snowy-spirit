@@ -7,6 +7,7 @@ import earth.terrarium.olympus.client.utils.ListenableState
 import earth.terrarium.olympus.client.utils.State
 import me.marie.snowyspirits.SnowySpirits.mc
 import me.marie.snowyspirits.utils.roundToMaxDec
+import me.marie.snowyspirits.utils.tryCoerceIn
 //? if <=1.21.11 {
 /*import net.minecraft.client.gui.GuiGraphics as GuiGraphicsExtractor*/
 //? } else {
@@ -21,6 +22,8 @@ class SliderWidget<T: Number>(
     initState: State<T>,
     val minValue: T,
     val maxValue: T,
+    val ignoreMinValue: Boolean = false,
+    val ignoreMaxValue: Boolean = false,
 ) : BaseWidget() {
     private val SCROLLBAR = UIConstants.id("lists/scroll/thumb")
     private val SCROLLBAR_WIDTH = 6
@@ -280,7 +283,7 @@ class SliderWidget<T: Number>(
 
         val parsed = cachedInput
             .toDoubleOrNull()
-            ?.coerceIn(adapter.toDouble(minValue), adapter.toDouble(maxValue))
+            ?.tryCoerceIn(adapter.toDouble(minValue), adapter.toDouble(maxValue), ignoreMinValue, ignoreMaxValue)
             ?.let(adapter::fromDouble)
 
         state.set(parsed ?: state.get())

@@ -75,6 +75,32 @@ object Config : ConfigKt("snowyspirits/config") {
         this.translation = "config.snowyspirits.skyType"
     }
 
+    init {
+        separator {
+            title = "Custom End Flashes"
+            description = "Mrow :3"
+        }
+    }
+
+    var customEndFlashes by boolean(false) {
+        this.translation = "config.snowyspirits.customEndFlashes"
+    }
+
+    var endFlashInterval by int(30) {
+        this.translation = "config.snowyspirits.customEndFlashes.interval"
+        this.range = 1..Int.MAX_VALUE
+    }
+
+    var minEndFlashDuration by int(5) {
+        this.translation = "config.snowyspirits.customEndFlashes.minDuration"
+        this.range = 1..Int.MAX_VALUE
+    }
+
+    var maxEndFlashDuration by int(19) {
+        this.translation = "config.snowyspirits.customEndFlashes.maxDuration"
+        this.range = 1..Int.MAX_VALUE
+    }
+
     enum class MoonPhase(val phase: Int) {
         FULL_MOON(0),
         WANING_GIBBOUS(1),

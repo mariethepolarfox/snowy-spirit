@@ -2,6 +2,8 @@ package me.marie.snowyspirits.utils
 
 import me.marie.snowyspirits.SnowySpirits.mc
 import me.marie.snowyspirits.config.Config
+import me.marie.snowyspirits.handlers.ValueCache
+import net.minecraft.gametest.framework.TestEnvironmentDefinition
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
 import net.minecraft.world.entity.EntitySpawnReason
@@ -12,11 +14,20 @@ import net.minecraft.world.level.levelgen.Heightmap
 import net.minecraft.world.phys.Vec3
 import kotlin.random.Random
 
-object LightningBoltUtil {
+object LightningUtil {
 
     val boltEntities: MutableList<LightningBolt> = mutableListOf()
 
-    fun tickChunkThunder(chunk: LevelChunk) {
+    fun tickThunder(chunks: List<LevelChunk>) {
+        val isCorrectWeather = Config.weatherType == TestEnvironmentDefinition.Weather.Type.THUNDER
+        val isThunderingInWorld = ValueCache.cachedIsThundering(mc.level ?: return)
+        if (Config.weatherChanger && isCorrectWeather && !isThunderingInWorld) {
+            chunks.forEach(::tickChunkThunder)
+            tickBolts()
+        }
+    }
+
+    private fun tickChunkThunder(chunk: LevelChunk) {
         if (mc.level == null || Config.lightningChance == 0) return
         if (Random.nextDouble() > (1.0 / Config.lightningChance)) return
 
@@ -35,7 +46,7 @@ object LightningBoltUtil {
         boltEntities.add(bolt)
     }
 
-    fun tickBolts() {
+    private fun tickBolts() {
         val list = boltEntities.toList()
         list.forEach(::tickBolt)
     }

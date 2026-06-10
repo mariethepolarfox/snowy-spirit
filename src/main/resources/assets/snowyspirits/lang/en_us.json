@@ -24,5 +24,14 @@
   "config.snowyspirits.skyTypeChanger.desc": "Changes the sky type",
   "config.snowyspirits.skyTypeChanger.toggle": "Toggle sky type changer",
   "config.snowyspirits.skyType": "Sky Type",
-  "config.snowyspirits.skyType.desc": "Sky type to set"
+  "config.snowyspirits.skyType.desc": "Sky type to set",
+  "config.snowyspirits.customEndFlashes": "Custom End Flashes",
+  "config.snowyspirits.customEndFlashes.desc": "Enables custom end flashes",
+  "config.snowyspirits.customEndFlashes.toggle": "Toggle custom end flashes",
+  "config.snowyspirits.customEndFlashes.interval": "Interval",
+  "config.snowyspirits.customEndFlashes.interval.desc": "Interval in seconds",
+  "config.snowyspirits.customEndFlashes.minDuration": "Minimum Duration",
+  "config.snowyspirits.customEndFlashes.minDuration.desc": "Minimum duration in seconds",
+  "config.snowyspirits.customEndFlashes.maxDuration": "Maximum Duration",
+  "config.snowyspirits.customEndFlashes.maxDuration.desc": "Maximum duration in seconds"
 }
