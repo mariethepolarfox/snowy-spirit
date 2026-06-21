@@ -26,9 +26,9 @@ jobs:
             - name: Upload Artifact
               uses: actions/upload-artifact@v7.0.0
               with:
-                  name: 1.21.11
-                  path: build/libs/*-1.21.11.jar
+                name: 26.1
+                path: build/libs/*-26.1.jar
             - uses: actions/upload-artifact@v7.0.0
               with:
-                  name: 26.1
-                  path: build/libs/*-26.1.jar
+                  name: 26.2
+                  path: build/libs/*-26.2.jar

@@ -4,9 +4,9 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     java
     idea
-    kotlin("jvm") version "2.3.20"
+    kotlin("jvm") version libs.versions.kotlin.version.get()
     alias(libs.plugins.kotlin.symbol.processor)
-    alias(libs.plugins.loom.unobf)
+    alias(libs.plugins.loom)
     alias(libs.plugins.auto.mixins)
     alias(libs.plugins.mod.publishing)
     `versioned-catalogues`
@@ -41,10 +41,10 @@ var accessWidenerFile = rootProject.file("src/snowyspirits.accesswidener")
 loom {
     accessWidenerPath = accessWidenerFile
     runConfigs["client"].apply {
-        ideConfigGenerated(true)
-        runDir = "../../run"
-        vmArg("-Dfabric.modsFolder=" + '"' + rootProject.projectDir.resolve("run/${stonecutter.current.version.replace(".", "")}Mods").absolutePath + '"')
-        property("devauth.configDir", rootProject.file(".devauth").absolutePath)
+        generateRunConfig = true
+        runDirectory = rootProject.file("run")
+        jvmArguments.add("-Dfabric.modsFolder=" + '"' + rootProject.projectDir.resolve("run/${stonecutter.current.version.replace(".", "")}Mods").absolutePath + '"')
+        systemProperties.put("devauth.configDir", rootProject.file(".devauth").absolutePath)
     }
 }
 
@@ -81,7 +81,7 @@ tasks {
 
     compileKotlin {
         compilerOptions {
-            jvmTarget = preOrPostUnobf(JvmTarget.JVM_21, JvmTarget.JVM_25)
+            jvmTarget = JvmTarget.JVM_25
         }
     }
 
@@ -100,12 +100,12 @@ tasks.withType<ValidateAccessWidenerTask> { enabled = false }
 
 java {
     withSourcesJar()
-    targetCompatibility = preOrPostUnobf(JavaVersion.VERSION_21, JavaVersion.VERSION_25)
-    sourceCompatibility = preOrPostUnobf(JavaVersion.VERSION_21, JavaVersion.VERSION_25)
+    targetCompatibility = JavaVersion.VERSION_25
+    sourceCompatibility = JavaVersion.VERSION_25
 }
 
 kotlin {
-    jvmToolchain(preOrPostUnobf(21, 25))
+    jvmToolchain(25)
 }
 
 autoMixins {
@@ -159,10 +159,4 @@ publishMods {
     }
 
     dryRun.set(modrinthToken.orNull == null)
-}
-
-fun isPostUnobf(): Boolean = stonecutter.eval(stonecutter.current.version, ">=26.1")
-
-fun <T> preOrPostUnobf(pre: T, post: T): T {
-    return if (isPostUnobf()) post else pre
 }

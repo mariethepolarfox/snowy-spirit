@@ -15,7 +15,7 @@ public class WeatherEffectRendererMixin {
             method = "extractRenderState",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getHeight(Lnet/minecraft/world/level/levelgen/Heightmap$Types;II)I")
     )
-    private int extractRenderStateGetHeight(Level instance, Heightmap.Types types, int i, int j, Operation<Integer> original) {
-        return Config.INSTANCE.getNoPrecipitationBlocking() ? instance.getMinY() : original.call(instance, types, i, j);
+    private int extractRenderStateGetHeight(Level instance, Heightmap.Types type, int x, int z, Operation<Integer> original) {
+        return Config.INSTANCE.getNoPrecipitationBlocking() ? instance.getMinY() : original.call(instance, type, x, z);
     }
 }

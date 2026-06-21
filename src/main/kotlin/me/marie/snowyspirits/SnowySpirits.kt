@@ -62,7 +62,8 @@ object SnowySpirits : ClientModInitializer, Logger by LoggerFactory.getLogger(MO
     ) {
         dispatcher.register(
             ClientCommands.literal("snowyspirits").executes { _ ->
-                mc.schedule { mc.setScreen(ConfigScreen()) }
+                //~ if <= 26.1 'setScreenAndShow' -> 'setScreen'
+                mc.schedule { mc.setScreenAndShow(ConfigScreen()) }
                 1
             })
     }

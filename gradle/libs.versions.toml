@@ -1,9 +1,10 @@
 [versions]
+kotlin-version = "2.4.0"
 
 # Minecraft
-fabricLoader = "0.19.2"
-fabricKt = "1.13.10+kotlin.2.3.20"
-loom = "1.16-SNAPSHOT"
+fabricLoader = "0.19.3"
+fabricKt = "1.13.12+kotlin.2.4.0"
+loom = "1.17-SNAPSHOT"
 
 kotlin-symbol-processor = "2.3.4"
 
@@ -21,8 +22,7 @@ fabricKt = { module = "net.fabricmc:fabric-language-kotlin", version.ref = "fabr
 devauth = { module = "me.djtheredstoner:DevAuth-fabric", version.ref = "devauth" }
 
 [plugins]
-loom-unobf = { id = "net.fabricmc.fabric-loom", version.ref = "loom" }
-loom-obf = { id = "net.fabricmc.fabric-loom-remap", version.ref = "loom" }
+loom = { id = "net.fabricmc.fabric-loom", version.ref = "loom" }
 auto-mixins = { id = "me.owdding.auto-mixins", version.ref = "auto-mixins" }
 
 kotlin-symbol-processor = { id = "com.google.devtools.ksp", version.ref = "kotlin-symbol-processor" }

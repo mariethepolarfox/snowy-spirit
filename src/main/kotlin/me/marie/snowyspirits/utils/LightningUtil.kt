@@ -7,7 +7,8 @@ import net.minecraft.gametest.framework.TestEnvironmentDefinition
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
 import net.minecraft.world.entity.EntitySpawnReason
-import net.minecraft.world.entity.EntityType
+//~ if <= 26.1 'EntityTypes' -> 'EntityType as EntityTypes'
+import net.minecraft.world.entity.EntityTypes
 import net.minecraft.world.entity.LightningBolt
 import net.minecraft.world.level.chunk.LevelChunk
 import net.minecraft.world.level.levelgen.Heightmap
@@ -40,7 +41,7 @@ object LightningUtil {
             mc.level!!.getBlockRandomPos(minX, 0, minZ, 15),
         )
 
-        val bolt = EntityType.LIGHTNING_BOLT.create(mc.level!!, EntitySpawnReason.EVENT) ?: return
+        val bolt = EntityTypes.LIGHTNING_BOLT.create(mc.level!!, EntitySpawnReason.EVENT) ?: return
         bolt.snapTo(Vec3.atBottomCenterOf(randomBlockPos))
         bolt.setVisualOnly(true)
         boltEntities.add(bolt)

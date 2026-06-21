@@ -80,7 +80,8 @@ class CustomEndFlashState {
 
         if (intensity > 0.3f && !soundPlayed) {
             soundPlayed = true
-            if (mc.screen is WinScreen || mc.isPaused) return intensity
+            //~ if <= 26.1 'gui.screen()' -> 'screen'
+            if (mc.gui.screen() is WinScreen || mc.isPaused) return intensity
             playSound()
         }
         return intensity
@@ -92,7 +93,8 @@ class CustomEndFlashState {
                 SoundEvents.WEATHER_END_FLASH,
                 SoundSource.WEATHER,
                 RandomSource.create(flashSeed),
-                mc.gameRenderer.mainCamera,
+                //~ if <= 26.1 'mainCamera()' -> 'mainCamera'
+                mc.gameRenderer.mainCamera(),
                 xAngle,
                 yAngle,
             ),
