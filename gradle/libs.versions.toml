@@ -1,18 +1,18 @@
 [versions]
-kotlin-version = "2.4.0"
+kotlin-version = "2.4.20"
 
 # Minecraft
-fabricLoader = "0.19.3"
-fabricKt = "1.13.12+kotlin.2.4.0"
+fabricLoader = "0.19.5"
+fabricKt = "1.14.1+kotlin.2.4.20"
 loom = "1.17-SNAPSHOT"
 
-kotlin-symbol-processor = "2.3.4"
+kotlin-symbol-processor = "2.3.12"
 
-auto-mixins = "1.0.10"
+auto-mixins = "1.0.11"
 
 # Dev Dependencies
 devauth = "1.2.2"
-mod-publishing = "2.0.0"
+mod-publishing = "2.2.0"
 
 [libraries]
 

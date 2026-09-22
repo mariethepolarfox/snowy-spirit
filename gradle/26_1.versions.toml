@@ -3,13 +3,13 @@
 minecraft = "26.1"
 minecraft-start = "26.1"
 minecraft-end = "26.1.2"
-fabricApi = "0.152.1+26.1.2"
+fabricApi = "0.155.3+26.1.2"
 
 resourcefulConfig = "4.0.1"
 resourcefulConfigKt = "4.0.0-beta.1"
 
-modmenu = "18.0.0-beta.1"
-olympus = "1.8.0"
+modmenu = "18.0.1"
+olympus = "1.8.4"
 
 [libraries]
 

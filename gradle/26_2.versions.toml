@@ -2,13 +2,13 @@
 
 minecraft = "26.2"
 minecraft-range = "26.2"
-fabricApi = "0.152.2+26.2"
+fabricApi = "0.161.0+26.2"
 
 resourcefulConfig = "5.0.0"
 resourcefulConfigKt = "4.0.0-beta.1"
 
-modmenu = "20.0.0-beta.3"
-olympus = "1.9.0"
+modmenu = "20.0.2"
+olympus = "1.9.4"
 
 [libraries]
 

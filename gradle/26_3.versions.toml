@@ -1,0 +1,22 @@
+[versions]
+
+minecraft = "26.3"
+minecraft-range = "26.3"
+fabricApi = "0.161.0+26.3"
+
+resourcefulConfig = "6.0.1"
+resourcefulConfigKt = "4.0.0-beta.1"
+
+modmenu = "21.0.0-beta.1"
+olympus = "1.9.5"
+
+[libraries]
+
+minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft" }
+fabricApi = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabricApi" }
+
+resourcefulconfig = { module = "com.teamresourceful.resourcefulconfig:resourcefulconfig-fabric-26.3", version.ref = "resourcefulConfig" }
+resourcefulconfigkt = { module = "com.teamresourceful.resourcefulconfigkt:resourcefulconfigkt-26.1-rc-1", version.ref = "resourcefulConfigKt" }
+
+modmenu = { module = "com.terraformersmc:modmenu", version.ref = "modmenu" }
+olympus = { module = "earth.terrarium.olympus:olympus-fabric-26.3", version.ref = "olympus" }
